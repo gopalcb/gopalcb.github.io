@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collaboration Gates</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <main class="diagram-page">
+    <div class="diagram-sheet">
+      <h1 class="diagram-title">Collaboration Gates</h1>
+      <p class="diagram-subtitle">The system separates planning, approval, implementation, validation, feedback, and finalization.</p>
+      <section class="db-diagram"><h2 class="db-diagram__heading">Work gates</h2><div class="db-flow"><div class="db-label db-label--upper">USER REQUEST</div>
+<div class="db-connector db-connector--down" aria-hidden="true"></div>
+<div class="db-label db-label--normal">analyze and resolve context</div>
+<div class="db-connector db-connector--branch-right" aria-hidden="true"><div class="db-connector__spine"></div><ul class="db-connector__branches"><li class="db-connector__branch">choose owner agent</li>
+<li class="db-connector__branch">plan tasks when needed</li>
+<li class="db-connector__branch">use web research only for current external facts</li></ul></div>
+<div class="db-label db-label--normal">explicit task approval</div>
+<div class="db-connector db-connector--down" aria-hidden="true"></div>
+<div class="db-label db-label--normal">implement and validate</div>
+<div class="db-connector db-connector--branch-right" aria-hidden="true"><div class="db-connector__spine"></div><ul class="db-connector__branches"><li class="db-connector__branch">compile and tests</li>
+<li class="db-connector__branch">browser evidence for UI</li>
+<li class="db-connector__branch">strategy feedback for improvements</li></ul></div>
+<div class="db-label db-label--lower">finalize artifacts and memory candidates</div></div></section>
+    </div>
+  </main>
+</body>
+</html>
