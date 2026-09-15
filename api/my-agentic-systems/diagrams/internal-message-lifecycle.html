@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Message Lifecycle Detail</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <main class="diagram-page">
+    <div class="diagram-sheet">
+      <h1 class="diagram-title">Message Lifecycle Detail</h1>
+      <p class="diagram-subtitle">One durable message can be queued, processed, failed, replied to, and inspected later.</p>
+      <section class="db-diagram"><h2 class="db-diagram__heading">Inbox to reply</h2><div class="db-flow"><div class="db-label db-label--upper">AGENT MESSAGE</div>
+<div class="db-connector db-connector--down" aria-hidden="true"></div>
+<div class="db-label db-label--normal">inbox / recipient</div>
+<div class="db-connector db-connector--branch-right" aria-hidden="true"><div class="db-connector__spine"></div><ul class="db-connector__branches"><li class="db-connector__branch">index record under records/messages</li>
+<li class="db-connector__branch">append sent event to records/events.jsonl</li>
+<li class="db-connector__branch">link task or error state when present</li></ul></div>
+<div class="db-label db-label--normal">handler or agent accepts work</div>
+<div class="db-connector db-connector--branch-right" aria-hidden="true"><div class="db-connector__spine"></div><ul class="db-connector__branches"><li class="db-connector__branch">move to processed on success</li>
+<li class="db-connector__branch">move to failed with error note on failure</li>
+<li class="db-connector__branch">keep compact artifact paths in reply</li></ul></div>
+<div class="db-label db-label--lower">reply_to thread keeps the story together</div></div></section>
+    </div>
+  </main>
+</body>
+</html>

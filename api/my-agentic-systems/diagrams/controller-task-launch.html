@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Controller Task Launch</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <main class="diagram-page">
+    <div class="diagram-sheet">
+      <h1 class="diagram-title">Controller Task Launch</h1>
+      <p class="diagram-subtitle">Creating a task and starting a task are separate operator actions.</p>
+      <section class="db-diagram"><h2 class="db-diagram__heading">Task lifecycle</h2><div class="db-flow"><div class="db-label db-label--upper">CREATE TASK</div>
+<div class="db-connector db-connector--down" aria-hidden="true"></div>
+<div class="db-label db-label--normal">write task_request message</div>
+<div class="db-connector db-connector--branch-right" aria-hidden="true"><div class="db-connector__spine"></div><ul class="db-connector__branches"><li class="db-connector__branch">records/tasks stores status</li>
+<li class="db-connector__branch">inbox stores pending work</li>
+<li class="db-connector__branch">task thread can show details</li></ul></div>
+<div class="db-label db-label--normal">wait for user approval</div>
+<div class="db-connector db-connector--down" aria-hidden="true"></div>
+<div class="db-label db-label--normal">start task runner</div>
+<div class="db-connector db-connector--branch-right" aria-hidden="true"><div class="db-connector__spine"></div><ul class="db-connector__branches"><li class="db-connector__branch">delegate to runtime gateway</li>
+<li class="db-connector__branch">update task status</li>
+<li class="db-connector__branch">send task_request.result reply</li></ul></div>
+<div class="db-label db-label--lower">controller shows the real lifecycle</div></div></section>
+    </div>
+  </main>
+</body>
+</html>
