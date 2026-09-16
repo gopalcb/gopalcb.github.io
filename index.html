@@ -423,6 +423,11 @@
       };
 
       const scrollToSection = (id, behavior = "smooth") => {
+        if (id === "system") {
+          setActive(id);
+          window.scrollTo({ top: 0, behavior });
+          return;
+        }
         const section = document.getElementById(id);
         if (!section) {
           return;
