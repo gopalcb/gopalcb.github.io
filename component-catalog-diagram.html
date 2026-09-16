@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Component Catalog and Orchestration</title>
+  <link rel="stylesheet" href="assets/diagram-builder.css" />
+</head>
+<body>
+  <main class="diagram-page">
+    <div class="diagram-sheet">
+      <h1 class="diagram-title">Component Catalog and Orchestration</h1>
+      <p class="diagram-subtitle">Available diagram families, reusable components, and the rendering path.</p>
+      <section class="db-diagram"><h2 class="db-diagram__heading">Component guide</h2><div class="db-component-guide"><article class="db-component-guide__item"><h3 class="db-component-guide__name">node-only</h3><p class="db-component-guide__detail">Plain rectangle. Use above or below compact compound components so the compound unit owns the connector arrows.</p><div class="db-component db-component--node-only db-component--compact">
+<div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">Plain node</span></div>
+</div></article>
+<article class="db-component-guide__item"><h3 class="db-component-guide__name">square-with-text</h3><p class="db-component-guide__detail">Compact square label for small concepts, states, or endpoints.</p><div class="db-component db-component--square-with-text db-component--compact">
+<div class="db-component__node db-component__node--square db-component__node--color-blue" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">State</span><span class="db-component__detail">ready</span></div>
+</div></article>
+<article class="db-component-guide__item"><h3 class="db-component-guide__name">square-with-icon-detail</h3><p class="db-component-guide__detail">Square label with an icon, title, and short explanation.</p><div class="db-component db-component--square-with-icon-detail db-component--compact">
+<div class="db-component__node db-component__node--square db-component__node--style-strong" style="--db-x:50%;--db-y:50%;"><span class="db-component__icon">T</span><span class="db-component__text">Tools</span><span class="db-component__detail">local calls</span></div>
+</div></article>
+<article class="db-component-guide__item"><h3 class="db-component-guide__name">tri-node-component</h3><p class="db-component-guide__detail">Three-node fan-in/fan-out. In a stack, the rectangle above and below this component should usually be node-only.</p><div class="db-component db-component--tri-node-component db-component--compact">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="50" y1="0" x2="50" y2="20" />
+    <line x1="16" y1="20" x2="84" y2="20" />
+    <line x1="16" y1="20" x2="16" y2="39" />
+    <line x1="50" y1="20" x2="50" y2="39" />
+    <line x1="84" y1="20" x2="84" y2="39" />
+    <line x1="16" y1="61" x2="16" y2="76" />
+    <line x1="50" y1="61" x2="50" y2="76" />
+    <line x1="84" y1="61" x2="84" y2="76" />
+    <line x1="16" y1="76" x2="84" y2="76" />
+    <line x1="50" y1="76" x2="50" y2="94" />
+  </svg>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:16%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:50%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:84%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:50%;--db-y:94%;"></span>
+<div class="db-component__node" style="--db-x:16%;--db-y:50%;"><span class="db-component__text">model events</span></div>
+<div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">tool events</span></div>
+<div class="db-component__node" style="--db-x:84%;--db-y:50%;"><span class="db-component__text">workflow events</span></div>
+</div></article>
+<article class="db-component-guide__item"><h3 class="db-component-guide__name">double-node-component</h3><p class="db-component-guide__detail">Two-node fan-in/fan-out. It draws the top incoming stem and bottom outgoing arrow itself.</p><div class="db-component db-component--double-node-component db-component--compact">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="50" y1="0" x2="50" y2="20" />
+    <line x1="27" y1="20" x2="73" y2="20" />
+    <line x1="27" y1="20" x2="27" y2="39" />
+    <line x1="73" y1="20" x2="73" y2="39" />
+    <line x1="27" y1="61" x2="27" y2="76" />
+    <line x1="73" y1="61" x2="73" y2="76" />
+    <line x1="27" y1="76" x2="73" y2="76" />
+    <line x1="50" y1="76" x2="50" y2="94" />
+  </svg>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:27%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:73%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:50%;--db-y:94%;"></span>
+<div class="db-component__node" style="--db-x:27%;--db-y:50%;"><span class="db-component__text">events.jsonl</span></div>
+<div class="db-component__node" style="--db-x:73%;--db-y:50%;"><span class="db-component__text">live subscribers</span></div>
+</div></article>
+<article class="db-component-guide__item"><h3 class="db-component-guide__name">node-with-up-down-arrow</h3><p class="db-component-guide__detail">Single standalone node with one incoming top arrow and one outgoing down arrow.</p><div class="db-component db-component--node-with-up-down-arrow db-component--compact">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="50" y1="4" x2="50" y2="39" />
+    <line x1="50" y1="61" x2="50" y2="84" />
+  </svg>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:50%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:50%;--db-y:84%;"></span>
+<div class="db-component__node" style="--db-x:50%;--db-y:51%;"><span class="db-component__text">EventHub</span></div>
+</div></article>
+<article class="db-component-guide__item"><h3 class="db-component-guide__name">node-with-down-arrow</h3><p class="db-component-guide__detail">Standalone source node when only the next thing below needs to be reached.</p><div class="db-component db-component--node-with-down-arrow db-component--compact">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="50" y1="60" x2="50" y2="88" />
+  </svg>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:50%;--db-y:88%;"></span>
+<div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">Agent Runtime</span></div>
+</div></article>
+<article class="db-component-guide__item"><h3 class="db-component-guide__name">node-with-top-arrow</h3><p class="db-component-guide__detail">Standalone sink node when only an incoming top arrow is needed.</p><div class="db-component db-component--node-with-top-arrow db-component--compact">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="50" y1="8" x2="50" y2="39" />
+  </svg>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:50%;--db-y:39%;"></span>
+<div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">Finalizer</span></div>
+</div></article>
+<article class="db-component-guide__item"><h3 class="db-component-guide__name">tri-node-without-bottom-line</h3><p class="db-component-guide__detail">Three nodes with top rail only. Add down_arrow on selected nodes when only some outputs continue.</p><div class="db-component db-component--tri-node-without-bottom-line db-component--compact">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="50" y1="0" x2="50" y2="20" />
+    <line x1="16" y1="20" x2="84" y2="20" />
+    <line x1="16" y1="20" x2="16" y2="39" />
+    <line x1="50" y1="20" x2="50" y2="39" />
+    <line x1="84" y1="20" x2="84" y2="39" />
+    <line x1="84" y1="60" x2="84" y2="78" />
+  </svg>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:16%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:50%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:84%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:84%;--db-y:78%;"></span>
+<div class="db-component__node" style="--db-x:16%;--db-y:50%;"><span class="db-component__text">run.json</span></div>
+<div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">summary.md</span></div>
+<div class="db-component__node" style="--db-x:84%;--db-y:50%;"><span class="db-component__text">metrics</span></div>
+<div class="db-component__caption" style="--db-x:84%;--db-y:91%;">memory candidates</div></div></article>
+<article class="db-component-guide__item"><h3 class="db-component-guide__name">double-node-without-bottom-line</h3><p class="db-component-guide__detail">Two nodes with top rail only. Add down_arrow to either or both outputs as needed.</p><div class="db-component db-component--double-node-without-bottom-line db-component--compact">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="50" y1="0" x2="50" y2="20" />
+    <line x1="27" y1="20" x2="73" y2="20" />
+    <line x1="27" y1="20" x2="27" y2="39" />
+    <line x1="73" y1="20" x2="73" y2="39" />
+    <line x1="73" y1="60" x2="73" y2="78" />
+  </svg>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:27%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:73%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:73%;--db-y:78%;"></span>
+<div class="db-component__node" style="--db-x:27%;--db-y:50%;"><span class="db-component__text">events.jsonl</span></div>
+<div class="db-component__node" style="--db-x:73%;--db-y:50%;"><span class="db-component__text">live subscribers</span></div>
+<div class="db-component__caption" style="--db-x:73%;--db-y:91%;">Codex Agent Console</div></div></article>
+<article class="db-component-guide__item"><h3 class="db-component-guide__name">horizontal-right-arrow</h3><p class="db-component-guide__detail">Two horizontal nodes connected left-to-right.</p><div class="db-component db-component--horizontal-right-arrow db-component--compact">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="40" y1="50" x2="60" y2="50" />
+  </svg>
+<span class="db-component__arrowhead-horizontal db-component__arrowhead-horizontal--right" aria-hidden="true" style="--db-x:60%;--db-y:50%;"></span>
+<div class="db-component__node" style="--db-x:27%;--db-y:50%;"><span class="db-component__text">Input</span></div>
+<div class="db-component__node" style="--db-x:73%;--db-y:50%;"><span class="db-component__text">Output</span></div>
+</div></article>
+<article class="db-component-guide__item"><h3 class="db-component-guide__name">horizontal-left-arrow</h3><p class="db-component-guide__detail">Two horizontal nodes connected right-to-left.</p><div class="db-component db-component--horizontal-left-arrow db-component--compact">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="40" y1="50" x2="60" y2="50" />
+  </svg>
+<span class="db-component__arrowhead-horizontal db-component__arrowhead-horizontal--left" aria-hidden="true" style="--db-x:40%;--db-y:50%;"></span>
+<div class="db-component__node" style="--db-x:27%;--db-y:50%;"><span class="db-component__text">Consumer</span></div>
+<div class="db-component__node" style="--db-x:73%;--db-y:50%;"><span class="db-component__text">Source</span></div>
+</div></article>
+<article class="db-component-guide__item"><h3 class="db-component-guide__name">horizontal-two-way-arrow</h3><p class="db-component-guide__detail">Two horizontal nodes connected in both directions.</p><div class="db-component db-component--horizontal-two-way-arrow db-component--compact">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="40" y1="50" x2="60" y2="50" />
+  </svg>
+<span class="db-component__arrowhead-horizontal db-component__arrowhead-horizontal--right" aria-hidden="true" style="--db-x:60%;--db-y:50%;"></span>
+<span class="db-component__arrowhead-horizontal db-component__arrowhead-horizontal--left" aria-hidden="true" style="--db-x:40%;--db-y:50%;"></span>
+<div class="db-component__node" style="--db-x:27%;--db-y:50%;"><span class="db-component__icon">A</span><span class="db-component__text">Agent</span></div>
+<div class="db-component__node" style="--db-x:73%;--db-y:50%;"><span class="db-component__icon">R</span><span class="db-component__text">Runtime</span></div>
+</div></article></div></section>
+<section class="db-diagram"><h2 class="db-diagram__heading">Rendering orchestration</h2><div class="db-flow"><div class="db-label db-label--upper">YAML INPUT</div>
+<div class="db-connector db-connector--branch-right" aria-hidden="true"><div class="db-connector__spine"></div><ul class="db-connector__branches"><li class="db-connector__branch">diagram type</li>
+<li class="db-connector__branch">component name</li>
+<li class="db-connector__branch">node data</li></ul></div>
+<div class="db-label db-label--normal">Validate document</div>
+<div class="db-connector db-connector--branch-right" aria-hidden="true"><div class="db-connector__spine"></div><ul class="db-connector__branches"><li class="db-connector__branch">supported type</li>
+<li class="db-connector__branch">known component</li>
+<li class="db-connector__branch">correct node count</li></ul></div>
+<div class="db-label db-label--normal">Render HTML</div>
+<div class="db-connector db-connector--down" aria-hidden="true"></div>
+<div class="db-label db-label--lower">CSS gives stable geometry</div></div></section>
+<section class="db-diagram"><h2 class="db-diagram__heading">Component families</h2><div class="db-tree"><span class="db-tree__root">components.yaml</span><ul><li><span class="db-tree__folder">flow</span><ul><li><span class="db-tree__file">label-upper</span></li>
+<li><span class="db-tree__file">label-normal</span></li>
+<li><span class="db-tree__file">label-lower</span></li>
+<li><span class="db-tree__file">down-arrow</span></li>
+<li><span class="db-tree__file">down-arrow-with-right-branches</span></li></ul></li>
+<li><span class="db-tree__folder">tree</span><ul><li><span class="db-tree__file">tree-root</span></li>
+<li><span class="db-tree__file">tree-folder</span></li>
+<li><span class="db-tree__file">tree-file</span></li></ul></li>
+<li><span class="db-tree__folder">event-bus</span><ul><li><span class="db-tree__file">bus-source</span></li>
+<li><span class="db-tree__file">bus-hub</span></li>
+<li><span class="db-tree__file">bus-output</span></li>
+<li><span class="db-tree__file">bus-artifact</span></li></ul></li>
+<li><span class="db-tree__folder">architecture</span><ul><li><span class="db-tree__file">node-only</span></li>
+<li><span class="db-tree__file">tri-node-component</span></li>
+<li><span class="db-tree__file">double-node-component</span></li>
+<li><span class="db-tree__file">no-bottom-line variants</span></li></ul></li>
+<li><span class="db-tree__folder">compact additions</span><ul><li><span class="db-tree__file">horizontal arrows</span></li>
+<li><span class="db-tree__file">animated arrows</span></li>
+<li><span class="db-tree__file">square nodes</span></li></ul></li></ul></div></section>
+<section class="db-diagram"><h2 class="db-diagram__heading">Renderer runtime shape</h2>
+<div class="db-bus">
+  
+  <svg class="db-bus__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <marker id="db-arrow" viewBox="0 0 12 9" refX="6" refY="0" markerWidth="12" markerHeight="9" orient="0">
+        <path d="M0,0 L12,0 L6,9 Z" />
+      </marker>
+    </defs>
+    <line x1="50" y1="9" x2="50" y2="15" />
+    <line x1="22.0" y1="15" x2="78.0" y2="15" />
+    <line x1="22.0" y1="15" x2="22.0" y2="19" /><line x1="22.0" y1="25" x2="22.0" y2="31" />
+<line x1="50.0" y1="15" x2="50.0" y2="19" /><line x1="50.0" y1="25" x2="50.0" y2="31" />
+<line x1="78.0" y1="15" x2="78.0" y2="19" /><line x1="78.0" y1="25" x2="78.0" y2="31" />
+    <line x1="22.0" y1="31" x2="78.0" y2="31" />
+    <line x1="50" y1="31" x2="50" y2="35" marker-end="url(#db-arrow)" />
+    <line x1="50" y1="41" x2="50" y2="47" />
+    <line x1="34.0" y1="47" x2="66.0" y2="47" />
+    <line x1="34.0" y1="47" x2="34.0" y2="52" />
+<line x1="66.0" y1="47" x2="66.0" y2="52" />
+    <line x1="50" y1="58" x2="50" y2="67" marker-end="url(#db-arrow)" />
+    <line x1="50" y1="73" x2="50" y2="79" />
+    <line x1="25.0" y1="79" x2="75.0" y2="79" />
+    <line x1="25.0" y1="79" x2="25.0" y2="80" />
+<line x1="50.0" y1="79" x2="50.0" y2="80" />
+<line x1="75.0" y1="79" x2="75.0" y2="80" />
+    <line x1="75.0" y1="84" x2="75.0" y2="91" marker-end="url(#db-arrow)" />
+  </svg>
+
+  <div class="db-bus__node db-bus__runtime" style="--db-x:50%;--db-y:6%;">Diagram request</div>
+  <div class="db-bus__node db-bus__source" style="--db-x:22.0%;--db-y:22%;">YAML document</div>
+<div class="db-bus__node db-bus__source" style="--db-x:50.0%;--db-y:22%;">component catalog</div>
+<div class="db-bus__node db-bus__source" style="--db-x:78.0%;--db-y:22%;">stylesheet</div>
+  <div class="db-bus__node db-bus__hub" style="--db-x:50%;--db-y:38%;">Renderer</div>
+  <div class="db-bus__node db-bus__output" style="--db-x:34.0%;--db-y:55%;">validated payload</div>
+<div class="db-bus__node db-bus__output" style="--db-x:66.0%;--db-y:55%;">HTML document</div><div class="db-bus__caption" style="--db-x:66.0%;--db-y:65%;">article diagram</div>
+  <div class="db-bus__node" style="--db-x:50%;--db-y:70%;">Reader output</div>
+  <div class="db-bus__node db-bus__artifact" style="--db-x:25.0%;--db-y:82%;">clean layout</div>
+<div class="db-bus__node db-bus__artifact" style="--db-x:50.0%;--db-y:82%;">stable arrows</div>
+<div class="db-bus__node db-bus__artifact" style="--db-x:75.0%;--db-y:82%;">reusable examples</div>
+  <div class="db-bus__caption" style="--db-x:75.0%;--db-y:94%;">faster future diagrams</div>
+</div>
+</section>
+<section class="db-diagram"><h2 class="db-diagram__heading">Vertical composition</h2><div class="db-component-stack"><div class="db-component db-component--node-only db-component--compact">
+<div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">Request</span></div>
+</div>
+<div class="db-component db-component--tri-node-component db-component--compact">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="50" y1="0" x2="50" y2="20" />
+    <line x1="16" y1="20" x2="84" y2="20" />
+    <line x1="16" y1="20" x2="16" y2="39" />
+    <line x1="50" y1="20" x2="50" y2="39" />
+    <line x1="84" y1="20" x2="84" y2="39" />
+    <line x1="16" y1="61" x2="16" y2="76" />
+    <line x1="50" y1="61" x2="50" y2="76" />
+    <line x1="84" y1="61" x2="84" y2="76" />
+    <line x1="16" y1="76" x2="84" y2="76" />
+    <line x1="50" y1="76" x2="50" y2="94" />
+  </svg>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:16%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:50%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:84%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:50%;--db-y:94%;"></span>
+<div class="db-component__node" style="--db-x:16%;--db-y:50%;"><span class="db-component__text">Context</span></div>
+<div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">Pattern</span></div>
+<div class="db-component__node" style="--db-x:84%;--db-y:50%;"><span class="db-component__text">Rule</span></div>
+</div>
+<div class="db-component db-component--node-only db-component--compact">
+<div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">Component choice</span></div>
+</div>
+<div class="db-component db-component--double-node-without-bottom-line">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="50" y1="0" x2="50" y2="20" />
+    <line x1="27" y1="20" x2="73" y2="20" />
+    <line x1="27" y1="20" x2="27" y2="39" />
+    <line x1="73" y1="20" x2="73" y2="39" />
+    <line x1="27" y1="60" x2="27" y2="78" />
+    <line x1="73" y1="60" x2="73" y2="78" />
+  </svg>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:27%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:73%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:27%;--db-y:78%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:73%;--db-y:78%;"></span>
+<div class="db-component__node" style="--db-x:27%;--db-y:50%;"><span class="db-component__text">HTML</span></div>
+<div class="db-component__node" style="--db-x:73%;--db-y:50%;"><span class="db-component__text">CSS</span></div>
+<div class="db-component__caption" style="--db-x:27%;--db-y:91%;">render</div>
+<div class="db-component__caption" style="--db-x:73%;--db-y:91%;">style</div></div></div></section>
+<section class="db-diagram"><h2 class="db-diagram__heading">Horizontal right</h2><div class="db-component db-component--horizontal-right-arrow">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="40" y1="50" x2="60" y2="50" />
+  </svg>
+<span class="db-component__arrowhead-horizontal db-component__arrowhead-horizontal--right" aria-hidden="true" style="--db-x:60%;--db-y:50%;"></span>
+<div class="db-component__node db-component__node--color-green" style="--db-x:27%;--db-y:50%;"><span class="db-component__icon">Y</span><span class="db-component__text">YAML</span><span class="db-component__detail">source</span></div>
+<div class="db-component__node db-component__node--color-blue" style="--db-x:73%;--db-y:50%;"><span class="db-component__icon">H</span><span class="db-component__text">HTML</span><span class="db-component__detail">output</span></div>
+</div></section>
+<section class="db-diagram"><h2 class="db-diagram__heading">Horizontal left</h2><div class="db-component db-component--horizontal-left-arrow">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="40" y1="50" x2="60" y2="50" />
+  </svg>
+<span class="db-component__arrowhead-horizontal db-component__arrowhead-horizontal--left" aria-hidden="true" style="--db-x:40%;--db-y:50%;"></span>
+<div class="db-component__node db-component__node--style-outline" style="--db-x:27%;--db-y:50%;"><span class="db-component__icon">A</span><span class="db-component__text">Article</span><span class="db-component__detail">reads diagram</span></div>
+<div class="db-component__node db-component__node--style-strong" style="--db-x:73%;--db-y:50%;"><span class="db-component__icon">D</span><span class="db-component__text">Diagram</span><span class="db-component__detail">explains idea</span></div>
+</div></section>
+<section class="db-diagram"><h2 class="db-diagram__heading">Animated bidirectional</h2><div class="db-component db-component--animated-horizontal-two-way-arrow">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line class="db-component__flow-line" x1="40" y1="50" x2="60" y2="50" />
+  </svg>
+<span class="db-component__arrowhead-horizontal db-component__arrowhead-horizontal--right" aria-hidden="true" style="--db-x:60%;--db-y:50%;"></span>
+<span class="db-component__arrowhead-horizontal db-component__arrowhead-horizontal--left" aria-hidden="true" style="--db-x:40%;--db-y:50%;"></span>
+<div class="db-component__node db-component__node--color-yellow" style="--db-x:27%;--db-y:50%;"><span class="db-component__icon">M</span><span class="db-component__text">Memory</span><span class="db-component__detail">learns pattern</span></div>
+<div class="db-component__node db-component__node--color-red" style="--db-x:73%;--db-y:50%;"><span class="db-component__icon">C</span><span class="db-component__text">Catalog</span><span class="db-component__detail">stores pattern</span></div>
+</div></section>
+<section class="db-diagram"><h2 class="db-diagram__heading">Square text state</h2><div class="db-component db-component--square-with-text">
+<div class="db-component__node db-component__node--square db-component__node--color-neutral db-component__node--style-dashed" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">Stable</span><span class="db-component__detail">fixed geometry</span></div>
+</div></section>
+<section class="db-diagram"><h2 class="db-diagram__heading">Square icon detail state</h2><div class="db-component db-component--square-with-icon-detail">
+<div class="db-component__node db-component__node--square db-component__node--size-lg db-component__node--color-blue db-component__node--style-strong" style="--db-x:50%;--db-y:50%;"><span class="db-component__icon">R</span><span class="db-component__text">Reuse</span><span class="db-component__detail">named component</span></div>
+</div></section>
+    </div>
+  </main>
+</body>
+</html>

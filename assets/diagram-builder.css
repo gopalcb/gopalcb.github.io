@@ -1,0 +1,652 @@
+:root {
+  --db-surface: #f8f6f1;
+  --db-surface-soft: #ece9e2;
+  --db-surface-strong: #dfd9cf;
+  --db-text: #242521;
+  --db-text-soft: #676961;
+  --db-text-faint: #92948d;
+  --db-border: #d8d3c9;
+  --db-border-strong: #c8c2b6;
+  --db-line-strong: #676961;
+  --db-accent: #48675e;
+  --db-accent-soft: #dce6e1;
+  --db-shadow: 0 18px 34px rgba(37, 37, 32, 0.08);
+  --db-radius: 4px;
+  --db-font: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.diagram-page {
+  min-height: 100vh;
+  padding: 40px 18px;
+  color: var(--db-text);
+  font-family: var(--db-font);
+  background: transparent;
+}
+
+.diagram-page,
+.diagram-page * {
+  box-sizing: border-box;
+}
+
+.diagram-sheet {
+  width: min(1080px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 28px;
+  justify-items: center;
+  background: transparent;
+}
+
+.diagram-title {
+  margin: 0;
+  color: var(--db-text);
+  font-size: 18px;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.diagram-subtitle {
+  max-width: 68ch;
+  margin: -18px 0 4px;
+  color: var(--db-text-soft);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.db-diagram {
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 18px;
+  background: transparent;
+}
+
+.db-diagram__heading {
+  margin: 0 0 4px;
+  color: var(--db-text-soft);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.db-flow {
+  width: min(640px, 100%);
+  display: grid;
+  justify-items: center;
+}
+
+.db-label {
+  min-width: 190px;
+  max-width: min(360px, 100%);
+  padding: 9px 14px;
+  border: 1px solid var(--db-border);
+  border-radius: var(--db-radius);
+  background: rgba(248, 246, 241, 0.9);
+  box-shadow: var(--db-shadow);
+  color: var(--db-text);
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.db-label--upper {
+  background: rgba(220, 230, 225, 0.92);
+  border-color: rgba(72, 103, 94, 0.24);
+  color: var(--db-accent);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.db-label--normal {
+  background: rgba(248, 246, 241, 0.94);
+}
+
+.db-label--lower {
+  background: rgba(236, 233, 226, 0.78);
+  color: var(--db-text-soft);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.db-connector {
+  --db-line: var(--db-border-strong);
+  position: relative;
+  width: min(360px, 100%);
+  min-height: 46px;
+  color: var(--db-line);
+}
+
+.db-connector--down::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 28px;
+  background: var(--db-line);
+}
+
+.db-connector--down::after {
+  content: "";
+  position: absolute;
+  top: 28px;
+  left: calc(50% - 6px);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 9px solid var(--db-line);
+}
+
+.db-connector--branch-right {
+  display: grid;
+  grid-template-columns: minmax(48px, 1fr) minmax(160px, 1fr);
+  column-gap: 0;
+  align-items: start;
+  min-height: 64px;
+}
+
+.db-connector--branch-right .db-connector__spine {
+  position: relative;
+  height: 100%;
+  min-height: 64px;
+}
+
+.db-connector--branch-right .db-connector__spine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: calc(100% - 11px);
+  background: var(--db-line);
+}
+
+.db-connector--branch-right .db-connector__spine::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  bottom: 2px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 9px solid var(--db-line);
+}
+
+.db-connector__branches {
+  display: grid;
+  gap: 10px;
+  margin: 11px 0 26px;
+  padding: 0;
+  list-style: none;
+}
+
+.db-connector__branch {
+  position: relative;
+  min-height: 20px;
+  padding-left: 24px;
+  color: var(--db-text-soft);
+  font-size: 11px;
+  line-height: 20px;
+}
+
+.db-connector__branch::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 17px;
+  height: 1px;
+  background: var(--db-line);
+}
+
+.db-tree {
+  width: min(620px, 100%);
+  padding: 4px 0;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.db-tree ul {
+  margin: 0;
+  padding: 0 0 0 25px;
+  list-style: none;
+}
+
+.db-tree li {
+  position: relative;
+  margin: 0;
+  padding: 4px 0 4px 18px;
+}
+
+.db-tree li::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 0;
+  width: 13px;
+  height: 1px;
+  background: var(--db-border-strong);
+}
+
+.db-tree li::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--db-border-strong);
+}
+
+.db-tree li:last-child::after {
+  height: 15px;
+}
+
+.db-tree__root,
+.db-tree__folder,
+.db-tree__file {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 3px 0;
+}
+
+.db-tree__root {
+  margin-bottom: 4px;
+  color: var(--db-accent);
+  font-weight: 800;
+}
+
+.db-tree__folder {
+  color: var(--db-text);
+  font-weight: 750;
+}
+
+.db-tree__file {
+  color: var(--db-text-soft);
+}
+
+.db-component {
+  position: relative;
+  width: min(980px, 100%);
+  height: 240px;
+  color: var(--db-line-strong);
+}
+
+.db-component-stack {
+  width: min(980px, 100%);
+  display: grid;
+  justify-items: center;
+  gap: 0;
+}
+
+.db-component-guide {
+  width: min(980px, 100%);
+  display: grid;
+  gap: 24px;
+}
+
+.db-component-guide__item {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  padding-block: 12px 4px;
+}
+
+.db-component-guide__name {
+  margin: 0;
+  color: var(--db-text);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.db-component-guide__detail {
+  max-width: 68ch;
+  margin: 0;
+  color: var(--db-text-soft);
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.db-component--node-only {
+  height: 112px;
+}
+
+.db-component--square-with-text,
+.db-component--square-with-icon-detail {
+  width: min(360px, 100%);
+  height: 170px;
+}
+
+.db-component--horizontal-right-arrow,
+.db-component--horizontal-left-arrow,
+.db-component--horizontal-two-way-arrow {
+  height: 150px;
+}
+
+.db-component--tri-node-without-bottom-line,
+.db-component--double-node-without-bottom-line {
+  height: 225px;
+}
+
+.db-component--node-with-up-down-arrow,
+.db-component--node-with-down-arrow,
+.db-component--node-with-top-arrow {
+  width: min(360px, 100%);
+  height: 190px;
+}
+
+.db-component--node-with-top-arrow {
+  height: 150px;
+}
+
+.db-component--compact {
+  margin-block: -22px;
+}
+
+.db-component__connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  z-index: 1;
+}
+
+.db-component__connectors line {
+  stroke: var(--db-line-strong);
+  stroke-width: 1.35;
+  opacity: 0.9;
+  vector-effect: non-scaling-stroke;
+}
+
+.db-component__connectors path {
+  fill: var(--db-line-strong);
+}
+
+.db-component__arrowhead {
+  position: absolute;
+  top: var(--db-y);
+  left: calc(var(--db-x) - 6px);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 9px solid var(--db-line-strong);
+  opacity: 0.9;
+  z-index: 1;
+}
+
+.db-component__arrowhead-horizontal {
+  position: absolute;
+  top: calc(var(--db-y) - 6px);
+  left: var(--db-x);
+  width: 0;
+  height: 0;
+  opacity: 0.9;
+  z-index: 1;
+}
+
+.db-component__arrowhead-horizontal--right {
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 9px solid var(--db-line-strong);
+}
+
+.db-component__arrowhead-horizontal--left {
+  transform: translateX(-9px);
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 9px solid var(--db-line-strong);
+}
+
+.db-component__node {
+  position: absolute;
+  top: var(--db-y);
+  left: var(--db-x);
+  transform: translate(-50%, -50%);
+  min-width: 190px;
+  max-width: min(360px, 100%);
+  display: grid;
+  place-items: center;
+  padding: 9px 14px;
+  border: 1px solid var(--db-border);
+  border-radius: var(--db-radius);
+  background: rgba(248, 246, 241, 0.94);
+  box-shadow: var(--db-shadow);
+  color: var(--db-text);
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.25;
+  text-align: center;
+  z-index: 2;
+}
+
+.db-component__node--square {
+  width: 132px;
+  min-width: 132px;
+  max-width: 132px;
+  min-height: 132px;
+  padding: 12px;
+  align-content: center;
+  gap: 5px;
+}
+
+.db-component__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin: 0 auto 2px;
+  border: 1px solid var(--db-border-strong);
+  border-radius: 50%;
+  color: var(--db-accent);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.db-component__text,
+.db-component__detail {
+  display: block;
+}
+
+.db-component__detail {
+  color: var(--db-text-soft);
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.db-component__node--size-sm {
+  min-width: 128px;
+  max-width: 180px;
+  padding: 7px 10px;
+  font-size: 10px;
+}
+
+.db-component__node--size-lg {
+  min-width: 220px;
+  max-width: 420px;
+  padding: 13px 18px;
+  font-size: 13px;
+}
+
+.db-component__node--color-green {
+  background: #e7f2ed;
+  border-color: #9cb9ad;
+}
+
+.db-component__node--color-blue {
+  background: #e7edf5;
+  border-color: #9eafc5;
+}
+
+.db-component__node--color-red {
+  background: #f7e9e6;
+  border-color: #cda59e;
+}
+
+.db-component__node--color-yellow {
+  background: #f7f1d9;
+  border-color: #c7b76d;
+}
+
+.db-component__node--color-neutral {
+  background: rgba(248, 246, 241, 0.94);
+}
+
+.db-component__node--style-strong {
+  border-color: var(--db-accent);
+  background: var(--db-accent-soft);
+  color: var(--db-accent);
+}
+
+.db-component__node--style-outline {
+  background: transparent;
+  border-width: 1.5px;
+}
+
+.db-component__node--style-dashed {
+  border-style: dashed;
+  background: rgba(248, 246, 241, 0.72);
+}
+
+.db-component__caption {
+  position: absolute;
+  top: var(--db-y);
+  left: var(--db-x);
+  transform: translate(-50%, -50%);
+  width: clamp(132px, 18vw, 205px);
+  color: var(--db-text-soft);
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.25;
+  text-align: center;
+  z-index: 2;
+}
+
+.db-bus {
+  width: min(920px, 100%);
+  position: relative;
+  min-height: 780px;
+  padding: 0;
+}
+
+.db-bus__node {
+  position: absolute;
+  top: var(--db-y);
+  left: var(--db-x);
+  transform: translate(-50%, -50%);
+  min-width: 142px;
+  max-width: 190px;
+  padding: 8px 12px;
+  border: 1px solid var(--db-border);
+  border-radius: var(--db-radius);
+  background: rgba(248, 246, 241, 0.92);
+  box-shadow: var(--db-shadow);
+  color: var(--db-text);
+  font-size: 11px;
+  font-weight: 750;
+  line-height: 1.25;
+  text-align: center;
+  z-index: 2;
+}
+
+.db-bus__runtime,
+.db-bus__hub {
+  background: rgba(220, 230, 225, 0.94);
+  border-color: rgba(72, 103, 94, 0.28);
+  color: var(--db-accent);
+}
+
+.db-bus__caption {
+  position: absolute;
+  top: var(--db-y);
+  left: var(--db-x);
+  transform: translate(-50%, -50%);
+  color: var(--db-text-soft);
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  z-index: 2;
+}
+
+.db-bus__connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  z-index: 1;
+}
+
+.db-bus__connectors line {
+  stroke: var(--db-line-strong);
+  stroke-width: 1.35;
+  opacity: 0.9;
+  vector-effect: non-scaling-stroke;
+}
+
+.db-bus__connectors path {
+  fill: var(--db-line-strong);
+}
+
+@media (max-width: 720px) {
+  .diagram-page {
+    padding: 24px 10px;
+  }
+
+  .db-diagram {
+    padding: 12px 0;
+  }
+
+  .db-label {
+    min-width: min(220px, 100%);
+  }
+
+  .db-component {
+    height: 210px;
+  }
+
+  .db-component--node-only {
+    height: 96px;
+  }
+
+  .db-component--tri-node-without-bottom-line,
+  .db-component--double-node-without-bottom-line {
+    height: 205px;
+  }
+
+  .db-component--node-with-up-down-arrow,
+  .db-component--node-with-down-arrow,
+  .db-component--node-with-top-arrow {
+    height: 170px;
+  }
+
+  .db-component__caption {
+    width: clamp(96px, 28vw, 128px);
+    font-size: 10px;
+  }
+
+  .db-bus {
+    min-height: 680px;
+  }
+
+  .db-bus__node {
+    min-width: 116px;
+    max-width: 148px;
+    padding: 7px 8px;
+    font-size: 10px;
+  }
+}

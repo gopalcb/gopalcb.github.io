@@ -4,20 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta
-      http-equiv="refresh"
-      content="0; url=https://gopalcb.github.io/my-agentic-systems/articles/why-i-built-my-agent-systems"
+      name="description"
+      content="A diagram-first playbook for Gopal C. Bala's custom Codex agent tools and runtime: messaging, memory, custom tools, workflow routing, and diagram-builder use case."
     >
-    <link rel="canonical" href="https://gopalcb.github.io/my-agentic-systems/articles/why-i-built-my-agent-systems">
-    <title>Redirecting to My Agent Systems</title>
+    <title>Gopal C. Bala | Agent Runtime Diagram Playbook</title>
     <style>
       :root {
         color-scheme: light;
-        --bg: #f4f6f8;
+        --bg: #f8f6f1;
         --surface: #ffffff;
-        --text: #20242a;
-        --text-soft: #59616b;
-        --accent: #247b5f;
-        --border: #d8dee6;
+        --surface-soft: #ece9e2;
+        --surface-strong: #dfd9cf;
+        --text: #20231f;
+        --text-soft: #62665f;
+        --text-faint: #8a8d86;
+        --border: #d8d3c9;
+        --accent: #48675e;
+        --accent-soft: #dce6e1;
+        --shadow: 0 18px 36px rgba(32, 35, 31, 0.08);
         --font: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
 
@@ -25,57 +29,415 @@
         box-sizing: border-box;
       }
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         min-height: 100vh;
         margin: 0;
-        display: grid;
-        place-items: center;
-        padding: 24px;
-        background: linear-gradient(180deg, #f8fafc 0%, var(--bg) 100%);
+        background: var(--bg);
         color: var(--text);
         font-family: var(--font);
       }
 
-      main {
-        width: min(520px, 100%);
-        padding: 24px;
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        background: var(--surface);
+      a {
+        color: inherit;
       }
 
-      h1 {
-        margin: 0 0 10px;
-        font-size: 22px;
+      .layout {
+        width: min(1440px, 100%);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 248px minmax(0, 1fr);
+      }
+
+      .tracker {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        padding: 28px 18px;
+        border-right: 1px solid var(--border);
+        background: rgba(248, 246, 241, 0.94);
+      }
+
+      .tracker__title {
+        margin: 0 0 18px;
+        color: var(--text);
+        font-size: 16px;
         line-height: 1.2;
       }
 
-      p {
-        margin: 0;
+      .tracker__nav {
+        display: grid;
+        gap: 8px;
+      }
+
+      .tracker__link {
+        display: grid;
+        grid-template-columns: 24px 1fr;
+        gap: 8px;
+        align-items: center;
+        min-height: 44px;
+        padding: 8px 10px;
+        border: 1px solid transparent;
+        border-radius: 7px;
         color: var(--text-soft);
-        font-size: 14px;
+        font-size: 12px;
+        font-weight: 750;
+        line-height: 1.25;
+        text-decoration: none;
+      }
+
+      .tracker__link::before {
+        content: attr(data-step);
+        display: grid;
+        place-items: center;
+        width: 24px;
+        height: 24px;
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        color: var(--text-faint);
+        font-size: 10px;
+        font-weight: 850;
+      }
+
+      .tracker__link.is-active {
+        border-color: rgba(72, 103, 94, 0.28);
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+
+      .tracker__link.is-active::before {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      main {
+        min-width: 0;
+        padding: 34px 26px 72px;
+      }
+
+      .hero {
+        display: grid;
+        gap: 12px;
+        max-width: 920px;
+        margin: 0 0 24px;
+      }
+
+      .eyebrow {
+        color: var(--accent);
+        font-size: 11px;
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 860px;
+        font-size: clamp(30px, 4.2vw, 54px);
+        line-height: 1.02;
+        letter-spacing: 0;
+      }
+
+      .hero p,
+      .section__summary {
+        margin: 0;
+        max-width: 760px;
+        color: var(--text-soft);
+        font-size: 15px;
         line-height: 1.6;
       }
 
-      a {
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 4px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 5px 9px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.5);
+        color: var(--text-soft);
+        font-size: 11px;
+        font-weight: 750;
+      }
+
+      .playbook-section {
+        scroll-margin-top: 18px;
+        display: grid;
+        gap: 14px;
+        padding: 28px 0 34px;
+        border-top: 1px solid var(--border);
+      }
+
+      .section__head {
+        display: grid;
+        gap: 8px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: clamp(22px, 3vw, 34px);
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      .mini-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .mini {
+        min-height: 104px;
+        display: grid;
+        align-content: start;
+        gap: 8px;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .mini strong {
+        color: var(--text);
+        font-size: 13px;
+        line-height: 1.25;
+      }
+
+      .mini span {
+        color: var(--text-soft);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .diagram-shell {
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .diagram-shell iframe {
+        display: block;
+        width: 100%;
+        border: 0;
+        background: var(--surface);
+      }
+
+      .diagram-shell--runtime iframe {
+        height: 1180px;
+      }
+
+      .diagram-shell--memory iframe {
+        height: 1140px;
+      }
+
+      .diagram-shell--catalog iframe {
+        height: 1760px;
+      }
+
+      .section-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .section-links a {
         color: var(--accent);
-        font-weight: 700;
+        font-size: 12px;
+        font-weight: 800;
+        text-underline-offset: 3px;
+      }
+
+      @media (max-width: 980px) {
+        .layout {
+          display: block;
+        }
+
+        .tracker {
+          position: sticky;
+          z-index: 5;
+          height: auto;
+          padding: 10px;
+          border-right: 0;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .tracker__title {
+          margin-bottom: 8px;
+          font-size: 13px;
+        }
+
+        .tracker__nav {
+          display: flex;
+          gap: 8px;
+          overflow-x: auto;
+          padding-bottom: 2px;
+        }
+
+        .tracker__link {
+          min-width: 162px;
+        }
+
+        main {
+          padding: 22px 12px 54px;
+        }
+
+        .mini-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 620px) {
+        .mini-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .diagram-shell--runtime iframe,
+        .diagram-shell--memory iframe {
+          height: 1080px;
+        }
+
+        .diagram-shell--catalog iframe {
+          height: 1620px;
+        }
       }
     </style>
-    <script>
-      window.location.replace('https://gopalcb.github.io/my-agentic-systems/articles/why-i-built-my-agent-systems');
-    </script>
   </head>
   <body>
-    <main>
-      <h1>Redirecting to My Agent Systems</h1>
-      <p>
-        Open
-        <a href="https://gopalcb.github.io/my-agentic-systems/articles/why-i-built-my-agent-systems">
-          My Agent Systems
-        </a>
-        if the redirect does not start automatically.
-      </p>
-    </main>
+    <div class="layout">
+      <aside class="tracker" aria-label="Playbook tracker">
+        <h2 class="tracker__title">Agent Runtime Playbook</h2>
+        <nav class="tracker__nav">
+          <a class="tracker__link is-active" data-step="01" href="#system">System map</a>
+          <a class="tracker__link" data-step="02" href="#messaging">Messaging flow</a>
+          <a class="tracker__link" data-step="03" href="#diagram-builder">Diagram builder</a>
+          <a class="tracker__link" data-step="04" href="#components">Components</a>
+        </nav>
+      </aside>
+
+      <main>
+        <header class="hero">
+          <div class="eyebrow">custom-agent-tools-and-runtime</div>
+          <h1>A diagram-first playbook for a Codex-based agent runtime</h1>
+          <p>
+            This page keeps the explanation light and lets the diagrams carry the flow:
+            runtime, agent messaging, tool calls, memory, and the diagram-builder use case.
+          </p>
+          <div class="chips" aria-label="System parts">
+            <span class="chip">agent messaging</span>
+            <span class="chip">custom tools</span>
+            <span class="chip">basic memory</span>
+            <span class="chip">runtime</span>
+            <span class="chip">diagram builder</span>
+          </div>
+        </header>
+
+        <section class="playbook-section" id="system" data-section>
+          <div class="section__head">
+            <div class="eyebrow">01 / Initial Agent Surface</div>
+            <h2>Start with the runtime pieces the agent can trust</h2>
+            <p class="section__summary">
+              The first layer is intentionally small: messages move requests, handlers
+              call known tools, memory keeps useful work, and the runtime ties it together.
+            </p>
+          </div>
+          <div class="mini-grid" aria-label="Runtime summary">
+            <div class="mini"><strong>Agent messaging</strong><span>Durable envelopes with topic, sender, payload, result, and inspectable state.</span></div>
+            <div class="mini"><strong>Custom tools</strong><span>Small direct tools for browser checks, search, feedback, diagrams, and local work.</span></div>
+            <div class="mini"><strong>Basic memory</strong><span>JSON records for task, summary, validation, files, and retrieval by simple search.</span></div>
+            <div class="mini"><strong>Runtime</strong><span>Workflow resolution, MQ dispatch, memory, and tool calls behind one compact facade.</span></div>
+          </div>
+        </section>
+
+        <section class="playbook-section" id="messaging" data-section>
+          <div class="section__head">
+            <div class="eyebrow">02 / Tool Calls Through Messages</div>
+            <h2>Tool calls ride inside durable messages</h2>
+            <p class="section__summary">
+              A caller posts intent. MQ turns it into an event. A topic handler does bounded work.
+              The result becomes state an operator or another agent can inspect.
+            </p>
+          </div>
+          <div class="section-links">
+            <a href="runtime-tools-diagram.html">Open runtime diagram</a>
+          </div>
+          <div class="diagram-shell diagram-shell--runtime">
+            <iframe src="runtime-tools-diagram.html" title="Agent messaging, custom tools, memory, and runtime flow"></iframe>
+          </div>
+        </section>
+
+        <section class="playbook-section" id="diagram-builder" data-section>
+          <div class="section__head">
+            <div class="eyebrow">03 / Diagram Builder Use Case</div>
+            <h2>Memory makes the diagram builder cleaner over time</h2>
+            <p class="section__summary">
+              The use case is simple: repeated visual choices become named components.
+              The next article starts with cleaner shapes, cleaner YAML, and fewer layout decisions.
+            </p>
+          </div>
+          <div class="section-links">
+            <a href="profile-diagram.html">Open memory-shaped diagram</a>
+          </div>
+          <div class="diagram-shell diagram-shell--memory">
+            <iframe src="profile-diagram.html" title="Memory shaped clean diagram building"></iframe>
+          </div>
+        </section>
+
+        <section class="playbook-section" id="components" data-section>
+          <div class="section__head">
+            <div class="eyebrow">04 / Component Orchestration</div>
+            <h2>Components make diagrams predictable</h2>
+            <p class="section__summary">
+              Flow, tree, event bus, component stack, square nodes, and horizontal arrows
+              all come from the same YAML-to-HTML path.
+            </p>
+          </div>
+          <div class="section-links">
+            <a href="component-catalog-diagram.html">Open component catalog diagram</a>
+            <a href="my-agentic-systems/">Open longer agent-system articles</a>
+            <a href="https://github.com/gopalcb">GitHub profile</a>
+          </div>
+          <div class="diagram-shell diagram-shell--catalog">
+            <iframe src="component-catalog-diagram.html" title="Component catalog and orchestration diagram"></iframe>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const links = Array.from(document.querySelectorAll(".tracker__link"));
+      const sections = Array.from(document.querySelectorAll("[data-section]"));
+      const linkById = new Map(links.map((link) => [link.getAttribute("href").slice(1), link]));
+
+      const observer = new IntersectionObserver((entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (!visible) {
+          return;
+        }
+
+        links.forEach((link) => link.classList.remove("is-active"));
+        const active = linkById.get(visible.target.id);
+        if (active) {
+          active.classList.add("is-active");
+        }
+      }, { rootMargin: "-18% 0px -58% 0px", threshold: [0.12, 0.28, 0.5] });
+
+      sections.forEach((section) => observer.observe(section));
+    </script>
   </body>
 </html>

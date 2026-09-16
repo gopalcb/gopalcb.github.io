@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intuitive Agent Messaging Flow</title>
+  <link rel="stylesheet" href="assets/diagram-builder.css" />
+</head>
+<body>
+  <main class="diagram-page">
+    <div class="diagram-sheet">
+      <h1 class="diagram-title">Intuitive Agent Messaging Flow</h1>
+      <p class="diagram-subtitle">How agent and workflow requests become topic-routed tool calls with durable state.</p>
+      <section class="db-diagram"><h2 class="db-diagram__heading">Message lifecycle</h2><div class="db-flow"><div class="db-label db-label--upper">CALLER POSTS MESSAGE</div>
+<div class="db-connector db-connector--branch-right" aria-hidden="true"><div class="db-connector__spine"></div><ul class="db-connector__branches"><li class="db-connector__branch">topic</li>
+<li class="db-connector__branch">sender</li>
+<li class="db-connector__branch">payload</li>
+<li class="db-connector__branch">optional event id</li></ul></div>
+<div class="db-label db-label--normal">MQ builds event</div>
+<div class="db-connector db-connector--down" aria-hidden="true"></div>
+<div class="db-label db-label--normal">Persist pending state</div>
+<div class="db-connector db-connector--down" aria-hidden="true"></div>
+<div class="db-label db-label--normal">Queue worker processes event</div>
+<div class="db-connector db-connector--branch-right" aria-hidden="true"><div class="db-connector__spine"></div><ul class="db-connector__branches"><li class="db-connector__branch">mark processing</li>
+<li class="db-connector__branch">dispatch by topic</li>
+<li class="db-connector__branch">attach result</li></ul></div>
+<div class="db-label db-label--lower">Persist processed state</div></div></section>
+<section class="db-diagram"><h2 class="db-diagram__heading">Message as control plane</h2>
+<div class="db-bus">
+  
+  <svg class="db-bus__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <marker id="db-arrow" viewBox="0 0 12 9" refX="6" refY="0" markerWidth="12" markerHeight="9" orient="0">
+        <path d="M0,0 L12,0 L6,9 Z" />
+      </marker>
+    </defs>
+    <line x1="50" y1="9" x2="50" y2="15" />
+    <line x1="22.0" y1="15" x2="78.0" y2="15" />
+    <line x1="22.0" y1="15" x2="22.0" y2="19" /><line x1="22.0" y1="25" x2="22.0" y2="31" />
+<line x1="50.0" y1="15" x2="50.0" y2="19" /><line x1="50.0" y1="25" x2="50.0" y2="31" />
+<line x1="78.0" y1="15" x2="78.0" y2="19" /><line x1="78.0" y1="25" x2="78.0" y2="31" />
+    <line x1="22.0" y1="31" x2="78.0" y2="31" />
+    <line x1="50" y1="31" x2="50" y2="35" marker-end="url(#db-arrow)" />
+    <line x1="50" y1="41" x2="50" y2="47" />
+    <line x1="34.0" y1="47" x2="66.0" y2="47" />
+    <line x1="34.0" y1="47" x2="34.0" y2="52" />
+<line x1="66.0" y1="47" x2="66.0" y2="52" />
+    <line x1="50" y1="58" x2="50" y2="67" marker-end="url(#db-arrow)" />
+    <line x1="50" y1="73" x2="50" y2="79" />
+    <line x1="25.0" y1="79" x2="75.0" y2="79" />
+    <line x1="25.0" y1="79" x2="25.0" y2="80" />
+<line x1="50.0" y1="79" x2="50.0" y2="80" />
+<line x1="75.0" y1="79" x2="75.0" y2="80" />
+    <line x1="75.0" y1="84" x2="75.0" y2="91" marker-end="url(#db-arrow)" />
+  </svg>
+
+  <div class="db-bus__node db-bus__runtime" style="--db-x:50%;--db-y:6%;">Agent runtime</div>
+  <div class="db-bus__node db-bus__source" style="--db-x:22.0%;--db-y:22%;">Agent request</div>
+<div class="db-bus__node db-bus__source" style="--db-x:50.0%;--db-y:22%;">Workflow step</div>
+<div class="db-bus__node db-bus__source" style="--db-x:78.0%;--db-y:22%;">Operator API</div>
+  <div class="db-bus__node db-bus__hub" style="--db-x:50%;--db-y:38%;">MQ event envelope</div>
+  <div class="db-bus__node db-bus__output" style="--db-x:34.0%;--db-y:55%;">Topic handler</div><div class="db-bus__caption" style="--db-x:34.0%;--db-y:65%;">tool result</div>
+<div class="db-bus__node db-bus__output" style="--db-x:66.0%;--db-y:55%;">Event snapshot</div><div class="db-bus__caption" style="--db-x:66.0%;--db-y:65%;">.agent-state/messages</div>
+  <div class="db-bus__node" style="--db-x:50%;--db-y:70%;">Inspectable state</div>
+  <div class="db-bus__node db-bus__artifact" style="--db-x:25.0%;--db-y:82%;">task records</div>
+<div class="db-bus__node db-bus__artifact" style="--db-x:50.0%;--db-y:82%;">memory records</div>
+<div class="db-bus__node db-bus__artifact" style="--db-x:75.0%;--db-y:82%;">workflow breakdown</div>
+  <div class="db-bus__caption" style="--db-x:75.0%;--db-y:94%;">operator trace</div>
+</div>
+</section>
+<section class="db-diagram"><h2 class="db-diagram__heading">Durable state shape</h2><div class="db-tree"><span class="db-tree__root">.agent-state/</span><ul><li><span class="db-tree__folder">messages/</span><ul><li><span class="db-tree__folder">events-read-file/</span><ul><li><span class="db-tree__file">evt-123.json</span></li></ul></li>
+<li><span class="db-tree__folder">events-run-workflow/</span><ul><li><span class="db-tree__file">evt-456.json</span></li></ul></li></ul></li>
+<li><span class="db-tree__folder">task/</span><ul><li><span class="db-tree__folder">custom-agent-tools-and-runtime/</span><ul><li><span class="db-tree__file">task.json</span></li></ul></li></ul></li>
+<li><span class="db-tree__folder">cache/</span><ul><li><span class="db-tree__folder">memory/</span><ul><li><span class="db-tree__file">records/</span></li></ul></li></ul></li></ul></div></section>
+<section class="db-diagram"><h2 class="db-diagram__heading">How a tool call rides inside a message</h2><div class="db-component-stack"><div class="db-component db-component--node-only db-component--compact">
+<div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">Agent or workflow</span></div>
+</div>
+<div class="db-component db-component--tri-node-component db-component--compact">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="50" y1="0" x2="50" y2="20" />
+    <line x1="16" y1="20" x2="84" y2="20" />
+    <line x1="16" y1="20" x2="16" y2="39" />
+    <line x1="50" y1="20" x2="50" y2="39" />
+    <line x1="84" y1="20" x2="84" y2="39" />
+    <line x1="16" y1="61" x2="16" y2="76" />
+    <line x1="50" y1="61" x2="50" y2="76" />
+    <line x1="84" y1="61" x2="84" y2="76" />
+    <line x1="16" y1="76" x2="84" y2="76" />
+    <line x1="50" y1="76" x2="50" y2="94" />
+  </svg>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:16%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:50%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:84%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:50%;--db-y:94%;"></span>
+<div class="db-component__node" style="--db-x:16%;--db-y:50%;"><span class="db-component__text">Topic</span><span class="db-component__detail">route</span></div>
+<div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">Payload</span><span class="db-component__detail">arguments</span></div>
+<div class="db-component__node" style="--db-x:84%;--db-y:50%;"><span class="db-component__text">Sender</span><span class="db-component__detail">trace</span></div>
+</div>
+<div class="db-component db-component--node-only db-component--compact">
+<div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">MQ handler</span></div>
+</div>
+<div class="db-component db-component--double-node-without-bottom-line">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="50" y1="0" x2="50" y2="20" />
+    <line x1="27" y1="20" x2="73" y2="20" />
+    <line x1="27" y1="20" x2="27" y2="39" />
+    <line x1="73" y1="20" x2="73" y2="39" />
+    <line x1="27" y1="60" x2="27" y2="78" />
+    <line x1="73" y1="60" x2="73" y2="78" />
+  </svg>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:27%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:73%;--db-y:39%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:27%;--db-y:78%;"></span>
+<span class="db-component__arrowhead" aria-hidden="true" style="--db-x:73%;--db-y:78%;"></span>
+<div class="db-component__node" style="--db-x:27%;--db-y:50%;"><span class="db-component__text">Tool function</span></div>
+<div class="db-component__node" style="--db-x:73%;--db-y:50%;"><span class="db-component__text">Result</span></div>
+<div class="db-component__caption" style="--db-x:27%;--db-y:91%;">bounded work</div>
+<div class="db-component__caption" style="--db-x:73%;--db-y:91%;">persisted</div></div></div></section>
+<section class="db-diagram"><h2 class="db-diagram__heading">Boundary between intent and permission</h2><div class="db-component db-component--horizontal-right-arrow">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="40" y1="50" x2="60" y2="50" />
+  </svg>
+<span class="db-component__arrowhead-horizontal db-component__arrowhead-horizontal--right" aria-hidden="true" style="--db-x:60%;--db-y:50%;"></span>
+<div class="db-component__node db-component__node--color-green" style="--db-x:27%;--db-y:50%;"><span class="db-component__icon">A</span><span class="db-component__text">Agent intent</span><span class="db-component__detail">asks for work</span></div>
+<div class="db-component__node db-component__node--color-blue" style="--db-x:73%;--db-y:50%;"><span class="db-component__icon">H</span><span class="db-component__text">Handler policy</span><span class="db-component__detail">known topics only</span></div>
+</div></section>
+<section class="db-diagram"><h2 class="db-diagram__heading">Agent-to-agent replies</h2><div class="db-component db-component--horizontal-two-way-arrow">
+  <svg class="db-component__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="40" y1="50" x2="60" y2="50" />
+  </svg>
+<span class="db-component__arrowhead-horizontal db-component__arrowhead-horizontal--right" aria-hidden="true" style="--db-x:60%;--db-y:50%;"></span>
+<span class="db-component__arrowhead-horizontal db-component__arrowhead-horizontal--left" aria-hidden="true" style="--db-x:40%;--db-y:50%;"></span>
+<div class="db-component__node db-component__node--style-outline" style="--db-x:27%;--db-y:50%;"><span class="db-component__icon">S</span><span class="db-component__text">Sender</span><span class="db-component__detail">original message</span></div>
+<div class="db-component__node db-component__node--style-strong" style="--db-x:73%;--db-y:50%;"><span class="db-component__icon">R</span><span class="db-component__text">Recipient</span><span class="db-component__detail">reply_to thread</span></div>
+</div></section>
+    </div>
+  </main>
+</body>
+</html>
