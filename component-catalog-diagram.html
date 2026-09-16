@@ -11,7 +11,7 @@
     <div class="diagram-sheet">
       <h1 class="diagram-title">Component Catalog and Orchestration</h1>
       <p class="diagram-subtitle">Available diagram families, reusable components, and the rendering path.</p>
-      <section class="db-diagram"><h2 class="db-diagram__heading">Component guide</h2><div class="db-component-guide"><article class="db-component-guide__item"><h3 class="db-component-guide__name">node-only</h3><p class="db-component-guide__detail">Plain rectangle. Use above or below compact compound components so the compound unit owns the connector arrows.</p><div class="db-component db-component--node-only db-component--compact">
+      <section class="db-diagram"><h2 class="db-diagram__heading">Component guide</h2><p class="db-diagram__note">Each component owns a small visual job. Combining them keeps the article diagrams predictable without custom drawing every time.</p><div class="db-component-guide"><article class="db-component-guide__item"><h3 class="db-component-guide__name">node-only</h3><p class="db-component-guide__detail">Plain rectangle. Use above or below compact compound components so the compound unit owns the connector arrows.</p><div class="db-component db-component--node-only db-component--compact">
 <div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">Plain node</span></div>
 </div></article>
 <article class="db-component-guide__item"><h3 class="db-component-guide__name">square-with-text</h3><p class="db-component-guide__detail">Compact square label for small concepts, states, or endpoints.</p><div class="db-component db-component--square-with-text db-component--compact">
@@ -137,18 +137,18 @@
 <div class="db-component__node" style="--db-x:27%;--db-y:50%;"><span class="db-component__icon">A</span><span class="db-component__text">Agent</span></div>
 <div class="db-component__node" style="--db-x:73%;--db-y:50%;"><span class="db-component__icon">R</span><span class="db-component__text">Runtime</span></div>
 </div></article></div></section>
-<section class="db-diagram"><h2 class="db-diagram__heading">Rendering orchestration</h2><div class="db-flow"><div class="db-label db-label--upper">YAML INPUT</div>
+<section class="db-diagram"><h2 class="db-diagram__heading">Rendering orchestration</h2><p class="db-diagram__note">The article asks for a diagram in YAML. The renderer validates the request, chooses known components, and writes stable HTML.</p><div class="db-flow"><div class="db-label db-label--upper">YAML INPUT<span class="db-label__detail">plain structure: type, labels, nodes, and notes</span></div>
 <div class="db-connector db-connector--branch-right" aria-hidden="true"><div class="db-connector__spine"></div><ul class="db-connector__branches"><li class="db-connector__branch">diagram type</li>
 <li class="db-connector__branch">component name</li>
 <li class="db-connector__branch">node data</li></ul></div>
-<div class="db-label db-label--normal">Validate document</div>
+<div class="db-label db-label--normal">Validate document<span class="db-label__detail">catch unknown pieces before rendering</span></div>
 <div class="db-connector db-connector--branch-right" aria-hidden="true"><div class="db-connector__spine"></div><ul class="db-connector__branches"><li class="db-connector__branch">supported type</li>
 <li class="db-connector__branch">known component</li>
 <li class="db-connector__branch">correct node count</li></ul></div>
-<div class="db-label db-label--normal">Render HTML</div>
+<div class="db-label db-label--normal">Render HTML<span class="db-label__detail">turn the diagram plan into readable markup</span></div>
 <div class="db-connector db-connector--down" aria-hidden="true"></div>
-<div class="db-label db-label--lower">CSS gives stable geometry</div></div></section>
-<section class="db-diagram"><h2 class="db-diagram__heading">Component families</h2><div class="db-tree"><span class="db-tree__root">components.yaml</span><ul><li><span class="db-tree__folder">flow</span><ul><li><span class="db-tree__file">label-upper</span></li>
+<div class="db-label db-label--lower">CSS gives stable geometry<span class="db-label__detail">same spacing, arrows, and label weight each time</span></div></div></section>
+<section class="db-diagram"><h2 class="db-diagram__heading">Component families</h2><p class="db-diagram__note">The catalog groups visual patterns by how a reader understands them: flow, tree, bus, architecture, and compact states.</p><div class="db-tree"><span class="db-tree__root">components.yaml</span><ul><li><span class="db-tree__folder">flow</span><ul><li><span class="db-tree__file">label-upper</span></li>
 <li><span class="db-tree__file">label-normal</span></li>
 <li><span class="db-tree__file">label-lower</span></li>
 <li><span class="db-tree__file">down-arrow</span></li>
@@ -168,6 +168,7 @@
 <li><span class="db-tree__file">animated arrows</span></li>
 <li><span class="db-tree__file">square nodes</span></li></ul></li></ul></div></section>
 <section class="db-diagram"><h2 class="db-diagram__heading">Renderer runtime shape</h2>
+<p class="db-diagram__note">The renderer combines the request, catalog, and stylesheet into output that is easy to inspect and reuse.</p>
 <div class="db-bus">
   
   <svg class="db-bus__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -210,7 +211,7 @@
   <div class="db-bus__caption" style="--db-x:75.0%;--db-y:94%;">faster future diagrams</div>
 </div>
 </section>
-<section class="db-diagram"><h2 class="db-diagram__heading">Vertical composition</h2><div class="db-component-stack"><div class="db-component db-component--node-only db-component--compact">
+<section class="db-diagram"><h2 class="db-diagram__heading">Vertical composition</h2><p class="db-diagram__note">Vertical stacks work well for process explanations: request, choice, component, then output.</p><div class="db-component-stack"><div class="db-component db-component--node-only db-component--compact">
 <div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">Request</span></div>
 </div>
 <div class="db-component db-component--tri-node-component db-component--compact">

@@ -78,6 +78,15 @@ body {
   text-transform: uppercase;
 }
 
+.db-diagram__note {
+  width: min(620px, 100%);
+  margin: -2px 0 6px;
+  color: var(--db-text-soft);
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+}
+
 .db-flow {
   width: min(640px, 100%);
   display: grid;
@@ -97,6 +106,17 @@ body {
   font-weight: 750;
   line-height: 1.25;
   text-align: center;
+}
+
+.db-label__detail {
+  display: block;
+  margin-top: 4px;
+  color: var(--db-text-soft);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0;
+  line-height: 1.35;
+  text-transform: none;
 }
 
 .db-label--upper {

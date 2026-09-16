@@ -10,17 +10,17 @@
   <main class="diagram-page">
     <div class="diagram-sheet">
       <h1 class="diagram-title">Memory Shaped Clean Diagram Building</h1>
-      <p class="diagram-subtitle">A set of diagrams showing how repeated choices became reusable diagram parts.</p>
-      <section class="db-diagram"><h2 class="db-diagram__heading">Memory loop</h2><div class="db-flow"><div class="db-label db-label--upper">MAKE A DIAGRAM</div>
+      <p class="diagram-subtitle">A set of diagrams showing how repeated choices become reusable diagram parts.</p>
+      <section class="db-diagram"><h2 class="db-diagram__heading">Memory loop</h2><p class="db-diagram__note">Each generated diagram leaves behind a small lesson: what shape worked, what label was clear, and what layout stayed stable.</p><div class="db-flow"><div class="db-label db-label--upper">MAKE A DIAGRAM<span class="db-label__detail">start from the article idea and a few visual rules</span></div>
 <div class="db-connector db-connector--down" aria-hidden="true"></div>
-<div class="db-label db-label--normal">Notice what repeats</div>
+<div class="db-label db-label--normal">Notice what repeats<span class="db-label__detail">patterns become easier to see after a few runs</span></div>
 <div class="db-connector db-connector--branch-right" aria-hidden="true"><div class="db-connector__spine"></div><ul class="db-connector__branches"><li class="db-connector__branch">shape</li>
 <li class="db-connector__branch">connector</li>
 <li class="db-connector__branch">label pattern</li></ul></div>
-<div class="db-label db-label--normal">Name the reusable part</div>
+<div class="db-label db-label--normal">Name the reusable part<span class="db-label__detail">turn a repeated choice into a component</span></div>
 <div class="db-connector db-connector--down" aria-hidden="true"></div>
-<div class="db-label db-label--lower">next diagram starts cleaner</div></div></section>
-<section class="db-diagram"><h2 class="db-diagram__heading">Builder memory tree</h2><div class="db-tree"><span class="db-tree__root">diagram-builder/</span><ul><li><span class="db-tree__folder">remembered-shapes</span><ul><li><span class="db-tree__file">flow labels</span></li>
+<div class="db-label db-label--lower">next diagram starts cleaner<span class="db-label__detail">less guessing, more consistent output</span></div></div></section>
+<section class="db-diagram"><h2 class="db-diagram__heading">Builder memory tree</h2><p class="db-diagram__note">The builder does not need a large memory system. A small catalog of proven parts is enough to make the next draft feel consistent.</p><div class="db-tree"><span class="db-tree__root">diagram-builder/</span><ul><li><span class="db-tree__folder">remembered-shapes</span><ul><li><span class="db-tree__file">flow labels</span></li>
 <li><span class="db-tree__file">tree nodes</span></li>
 <li><span class="db-tree__file">event bus</span></li>
 <li><span class="db-tree__file">fan-in components</span></li></ul></li>
@@ -30,6 +30,7 @@
 <li><span class="db-tree__folder">generated-output</span><ul><li><span class="db-tree__file">article diagrams</span></li>
 <li><span class="db-tree__file">component guide</span></li></ul></li></ul></div></section>
 <section class="db-diagram"><h2 class="db-diagram__heading">Memory moving through the builder</h2>
+<p class="db-diagram__note">Author intent, repeated patterns, and layout fixes feed the catalog. The catalog then produces cleaner YAML and stable HTML.</p>
 <div class="db-bus">
   
   <svg class="db-bus__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -72,7 +73,7 @@
   <div class="db-bus__caption" style="--db-x:75.0%;--db-y:94%;">better next draft</div>
 </div>
 </section>
-<section class="db-diagram"><h2 class="db-diagram__heading">From one-off drawing to reusable system</h2><div class="db-component-stack"><div class="db-component db-component--node-only db-component--compact">
+<section class="db-diagram"><h2 class="db-diagram__heading">From one-off drawing to reusable system</h2><p class="db-diagram__note">The builder improves when visual decisions are named once and reused instead of redrawn each time.</p><div class="db-component-stack"><div class="db-component db-component--node-only db-component--compact">
 <div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">One-off diagram</span></div>
 </div>
 <div class="db-component db-component--tri-node-component db-component--compact">

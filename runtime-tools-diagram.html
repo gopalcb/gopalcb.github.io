@@ -9,23 +9,24 @@
 <body>
   <main class="diagram-page">
     <div class="diagram-sheet">
-      <h1 class="diagram-title">Intuitive Agent Messaging Flow</h1>
-      <p class="diagram-subtitle">How agent and workflow requests become topic-routed tool calls with durable state.</p>
-      <section class="db-diagram"><h2 class="db-diagram__heading">Message lifecycle</h2><div class="db-flow"><div class="db-label db-label--upper">CALLER POSTS MESSAGE</div>
+      <h1 class="diagram-title">Agent Messaging and Tool Flow</h1>
+      <p class="diagram-subtitle">A compact view of how an agent request becomes a known tool call, a saved result, and reusable memory.</p>
+      <section class="db-diagram"><h2 class="db-diagram__heading">Message lifecycle</h2><p class="db-diagram__note">The message is the handoff. It carries just enough intent for the runtime to route, run, and record the work.</p><div class="db-flow"><div class="db-label db-label--upper">CALLER POSTS MESSAGE<span class="db-label__detail">agent, workflow, or operator asks for one bounded action</span></div>
 <div class="db-connector db-connector--branch-right" aria-hidden="true"><div class="db-connector__spine"></div><ul class="db-connector__branches"><li class="db-connector__branch">topic</li>
 <li class="db-connector__branch">sender</li>
 <li class="db-connector__branch">payload</li>
 <li class="db-connector__branch">optional event id</li></ul></div>
-<div class="db-label db-label--normal">MQ builds event</div>
+<div class="db-label db-label--normal">MQ builds event<span class="db-label__detail">wrap the request in a durable envelope</span></div>
 <div class="db-connector db-connector--down" aria-hidden="true"></div>
-<div class="db-label db-label--normal">Persist pending state</div>
+<div class="db-label db-label--normal">Persist pending state<span class="db-label__detail">make the work visible before it starts</span></div>
 <div class="db-connector db-connector--down" aria-hidden="true"></div>
-<div class="db-label db-label--normal">Queue worker processes event</div>
+<div class="db-label db-label--normal">Queue worker processes event<span class="db-label__detail">choose the handler by topic and run the tool</span></div>
 <div class="db-connector db-connector--branch-right" aria-hidden="true"><div class="db-connector__spine"></div><ul class="db-connector__branches"><li class="db-connector__branch">mark processing</li>
 <li class="db-connector__branch">dispatch by topic</li>
 <li class="db-connector__branch">attach result</li></ul></div>
-<div class="db-label db-label--lower">Persist processed state</div></div></section>
+<div class="db-label db-label--lower">Persist processed state<span class="db-label__detail">save result, logs, and next memory candidate</span></div></div></section>
 <section class="db-diagram"><h2 class="db-diagram__heading">Message as control plane</h2>
+<p class="db-diagram__note">Different callers use the same path, so the runtime stays simple and every result has a trace.</p>
 <div class="db-bus">
   
   <svg class="db-bus__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -68,11 +69,11 @@
   <div class="db-bus__caption" style="--db-x:75.0%;--db-y:94%;">operator trace</div>
 </div>
 </section>
-<section class="db-diagram"><h2 class="db-diagram__heading">Durable state shape</h2><div class="db-tree"><span class="db-tree__root">.agent-state/</span><ul><li><span class="db-tree__folder">messages/</span><ul><li><span class="db-tree__folder">events-read-file/</span><ul><li><span class="db-tree__file">evt-123.json</span></li></ul></li>
+<section class="db-diagram"><h2 class="db-diagram__heading">Durable state shape</h2><p class="db-diagram__note">The runtime stores the minimum state needed to explain what happened later.</p><div class="db-tree"><span class="db-tree__root">.agent-state/</span><ul><li><span class="db-tree__folder">messages/</span><ul><li><span class="db-tree__folder">events-read-file/</span><ul><li><span class="db-tree__file">evt-123.json</span></li></ul></li>
 <li><span class="db-tree__folder">events-run-workflow/</span><ul><li><span class="db-tree__file">evt-456.json</span></li></ul></li></ul></li>
 <li><span class="db-tree__folder">task/</span><ul><li><span class="db-tree__folder">custom-agent-tools-and-runtime/</span><ul><li><span class="db-tree__file">task.json</span></li></ul></li></ul></li>
 <li><span class="db-tree__folder">cache/</span><ul><li><span class="db-tree__folder">memory/</span><ul><li><span class="db-tree__file">records/</span></li></ul></li></ul></li></ul></div></section>
-<section class="db-diagram"><h2 class="db-diagram__heading">How a tool call rides inside a message</h2><div class="db-component-stack"><div class="db-component db-component--node-only db-component--compact">
+<section class="db-diagram"><h2 class="db-diagram__heading">How a tool call rides inside a message</h2><p class="db-diagram__note">Intent stays separate from execution. The handler decides what tool is allowed to run.</p><div class="db-component-stack"><div class="db-component db-component--node-only db-component--compact">
 <div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">Agent or workflow</span></div>
 </div>
 <div class="db-component db-component--tri-node-component db-component--compact">

@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta
       name="description"
-      content="A diagram-first playbook for Gopal C. Bala's custom Codex agent tools and runtime: messaging, memory, custom tools, workflow routing, and diagram-builder use case."
+      content="A compact visual summary of Gopal C. Bala's custom agent framework: message routing, bounded tools, runtime state, memory, and diagram-builder reuse."
     >
-    <title>Gopal C. Bala | Agent Runtime Diagram Playbook</title>
+    <title>Gopal C. Bala | Custom Agent Framework</title>
     <style>
       :root {
         color-scheme: light;
@@ -160,26 +160,6 @@
         text-align: center;
       }
 
-      .chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 4px;
-      }
-
-      .chip {
-        display: inline-flex;
-        align-items: center;
-        min-height: 28px;
-        padding: 5px 9px;
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        background: rgba(248, 246, 241, 0.9);
-        color: var(--text-soft);
-        font-size: 10px;
-        font-weight: 750;
-      }
-
       .playbook-section {
         scroll-margin-top: 18px;
         width: min(1080px, 100%);
@@ -256,15 +236,15 @@
       }
 
       .diagram-shell--runtime iframe {
-        height: 1180px;
+        height: 3560px;
       }
 
       .diagram-shell--memory iframe {
-        height: 1140px;
+        height: 3520px;
       }
 
       .diagram-shell--catalog iframe {
-        height: 1760px;
+        height: 7820px;
       }
 
       .section-links {
@@ -335,11 +315,11 @@
 
         .diagram-shell--runtime iframe,
         .diagram-shell--memory iframe {
-          height: 1080px;
+          height: 3440px;
         }
 
         .diagram-shell--catalog iframe {
-          height: 1620px;
+          height: 7820px;
         }
       }
     </style>
@@ -347,7 +327,7 @@
   <body>
     <div class="layout">
       <aside class="tracker" aria-label="Playbook tracker">
-        <h2 class="tracker__title">Agent Runtime Playbook</h2>
+        <h2 class="tracker__title">Framework Flow</h2>
         <nav class="tracker__nav">
           <a class="tracker__link is-active" data-step="01" href="#system">System map</a>
           <a class="tracker__link" data-step="02" href="#messaging">Messaging flow</a>
@@ -359,18 +339,13 @@
       <main>
         <header class="hero">
           <div class="eyebrow">custom-agent-tools-and-runtime</div>
-          <h1>A diagram-first playbook for a Codex-based agent runtime</h1>
+          <h1>Compact framework for agent work</h1>
           <p>
-            This page keeps the explanation light and lets the diagrams carry the flow:
-            runtime, agent messaging, tool calls, memory, and the diagram-builder use case.
+            The framework keeps an agent run easy to follow: requests become messages,
+            known tools do bounded work, the runtime saves useful state, and memory helps
+            the next run start cleaner. The diagrams below show that flow first, then use
+            the diagram builder as the main example.
           </p>
-          <div class="chips" aria-label="System parts">
-            <span class="chip">agent messaging</span>
-            <span class="chip">custom tools</span>
-            <span class="chip">basic memory</span>
-            <span class="chip">runtime</span>
-            <span class="chip">diagram builder</span>
-          </div>
         </header>
 
         <section class="playbook-section" id="system" data-section>
