@@ -12,16 +12,18 @@
       :root {
         color-scheme: light;
         --bg: #f8f6f1;
-        --surface: #ffffff;
+        --surface: #f8f6f1;
         --surface-soft: #ece9e2;
         --surface-strong: #dfd9cf;
-        --text: #20231f;
-        --text-soft: #62665f;
-        --text-faint: #8a8d86;
+        --text: #242521;
+        --text-soft: #676961;
+        --text-faint: #92948d;
         --border: #d8d3c9;
+        --border-strong: #c8c2b6;
         --accent: #48675e;
         --accent-soft: #dce6e1;
-        --shadow: 0 18px 36px rgba(32, 35, 31, 0.08);
+        --shadow: 0 18px 34px rgba(37, 37, 32, 0.08);
+        --radius: 4px;
         --font: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
 
@@ -49,23 +51,26 @@
         width: min(1440px, 100%);
         margin: 0 auto;
         display: grid;
-        grid-template-columns: 248px minmax(0, 1fr);
+        grid-template-columns: 236px minmax(0, 1fr);
       }
 
       .tracker {
         position: sticky;
         top: 0;
         height: 100vh;
-        padding: 28px 18px;
+        padding: 34px 18px;
         border-right: 1px solid var(--border);
-        background: rgba(248, 246, 241, 0.94);
+        background: rgba(248, 246, 241, 0.96);
       }
 
       .tracker__title {
-        margin: 0 0 18px;
+        margin: 0 0 20px;
         color: var(--text);
-        font-size: 16px;
-        line-height: 1.2;
+        font-size: 13px;
+        font-weight: 850;
+        letter-spacing: 0.03em;
+        line-height: 1.25;
+        text-transform: uppercase;
       }
 
       .tracker__nav {
@@ -81,7 +86,7 @@
         min-height: 44px;
         padding: 8px 10px;
         border: 1px solid transparent;
-        border-radius: 7px;
+        border-radius: var(--radius);
         color: var(--text-soft);
         font-size: 12px;
         font-weight: 750;
@@ -104,7 +109,7 @@
 
       .tracker__link.is-active {
         border-color: rgba(72, 103, 94, 0.28);
-        background: var(--accent-soft);
+        background: rgba(220, 230, 225, 0.8);
         color: var(--accent);
       }
 
@@ -115,39 +120,44 @@
 
       main {
         min-width: 0;
-        padding: 34px 26px 72px;
+        display: grid;
+        justify-items: center;
+        padding: 40px 26px 72px;
       }
 
       .hero {
         display: grid;
-        gap: 12px;
-        max-width: 920px;
-        margin: 0 0 24px;
+        justify-items: center;
+        gap: 10px;
+        width: min(1080px, 100%);
+        margin: 0 0 20px;
+        text-align: center;
       }
 
       .eyebrow {
         color: var(--accent);
-        font-size: 11px;
+        font-size: 9px;
         font-weight: 850;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
       }
 
       h1 {
         margin: 0;
-        max-width: 860px;
-        font-size: clamp(30px, 4.2vw, 54px);
-        line-height: 1.02;
+        max-width: 780px;
+        font-size: clamp(24px, 3.4vw, 42px);
+        line-height: 1.08;
         letter-spacing: 0;
       }
 
       .hero p,
       .section__summary {
         margin: 0;
-        max-width: 760px;
+        max-width: 68ch;
         color: var(--text-soft);
-        font-size: 15px;
-        line-height: 1.6;
+        font-size: 12px;
+        line-height: 1.5;
+        text-align: center;
       }
 
       .chips {
@@ -163,76 +173,86 @@
         min-height: 28px;
         padding: 5px 9px;
         border: 1px solid var(--border);
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.5);
+        border-radius: var(--radius);
+        background: rgba(248, 246, 241, 0.9);
         color: var(--text-soft);
-        font-size: 11px;
+        font-size: 10px;
         font-weight: 750;
       }
 
       .playbook-section {
         scroll-margin-top: 18px;
+        width: min(1080px, 100%);
         display: grid;
-        gap: 14px;
-        padding: 28px 0 34px;
+        justify-items: center;
+        gap: 18px;
+        padding: 30px 0 38px;
         border-top: 1px solid var(--border);
       }
 
       .section__head {
         display: grid;
+        justify-items: center;
         gap: 8px;
+        width: 100%;
+        text-align: center;
       }
 
       h2 {
         margin: 0;
-        font-size: clamp(22px, 3vw, 34px);
-        line-height: 1.08;
+        max-width: 760px;
+        font-size: clamp(18px, 2.4vw, 28px);
+        line-height: 1.12;
         letter-spacing: 0;
       }
 
       .mini-grid {
+        width: min(900px, 100%);
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 10px;
+        gap: 12px;
       }
 
       .mini {
         min-height: 104px;
         display: grid;
         align-content: start;
+        justify-items: center;
         gap: 8px;
         padding: 12px;
         border: 1px solid var(--border);
-        border-radius: 7px;
-        background: var(--surface);
+        border-radius: var(--radius);
+        background: rgba(248, 246, 241, 0.94);
         box-shadow: var(--shadow);
+        text-align: center;
       }
 
       .mini strong {
         color: var(--text);
-        font-size: 13px;
+        font-size: 12px;
         line-height: 1.25;
       }
 
       .mini span {
         color: var(--text-soft);
-        font-size: 12px;
+        font-size: 11px;
         line-height: 1.45;
       }
 
       .diagram-shell {
-        overflow: hidden;
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        background: var(--surface);
-        box-shadow: var(--shadow);
+        width: 100%;
+        overflow: visible;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
       }
 
       .diagram-shell iframe {
         display: block;
         width: 100%;
         border: 0;
-        background: var(--surface);
+        background: var(--bg);
       }
 
       .diagram-shell--runtime iframe {
@@ -250,13 +270,22 @@
       .section-links {
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
         gap: 10px;
       }
 
       .section-links a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 5px 9px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: rgba(248, 246, 241, 0.9);
         color: var(--accent);
-        font-size: 12px;
+        font-size: 10px;
         font-weight: 800;
+        text-decoration: none;
         text-underline-offset: 3px;
       }
 
