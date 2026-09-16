@@ -235,6 +235,7 @@
       .diagram-shell iframe {
         display: block;
         width: 100%;
+        overflow: hidden;
         border: 0;
         background: var(--bg);
       }
@@ -248,7 +249,7 @@
       }
 
       .diagram-shell--catalog iframe {
-        height: 7820px;
+        height: 8200px;
       }
 
       @media (max-width: 980px) {
@@ -301,7 +302,7 @@
         }
 
         .diagram-shell--catalog iframe {
-          height: 7820px;
+          height: 8200px;
         }
       }
     </style>
@@ -360,7 +361,7 @@
             </p>
           </div>
           <div class="diagram-shell diagram-shell--runtime">
-            <iframe src="runtime-tools-diagram.html" title="Agent messaging, custom tools, memory, and runtime flow"></iframe>
+            <iframe src="runtime-tools-diagram.html" title="Agent messaging, custom tools, memory, and runtime flow" scrolling="no"></iframe>
           </div>
         </section>
 
@@ -374,7 +375,7 @@
             </p>
           </div>
           <div class="diagram-shell diagram-shell--memory">
-            <iframe src="profile-diagram.html" title="Memory shaped clean diagram building"></iframe>
+            <iframe src="profile-diagram.html" title="Memory shaped clean diagram building" scrolling="no"></iframe>
           </div>
         </section>
 
@@ -388,7 +389,7 @@
             </p>
           </div>
           <div class="diagram-shell diagram-shell--catalog">
-            <iframe src="component-catalog-diagram.html" title="Component catalog and orchestration diagram"></iframe>
+            <iframe src="component-catalog-diagram.html" title="Component catalog and orchestration diagram" scrolling="no"></iframe>
           </div>
         </section>
       </main>
