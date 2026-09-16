@@ -51,7 +51,7 @@
         width: min(1440px, 100%);
         margin: 0 auto;
         display: grid;
-        grid-template-columns: 236px minmax(0, 1fr);
+        grid-template-columns: 280px minmax(0, 1fr);
       }
 
       .tracker {
@@ -140,6 +140,10 @@
         font-weight: 850;
         letter-spacing: 0.12em;
         text-transform: uppercase;
+      }
+
+      .eyebrow__line {
+        display: block;
       }
 
       h1 {
@@ -316,7 +320,10 @@
 
       <main>
         <header class="hero">
-          <div class="eyebrow">custom-agent-tools-and-runtime. GOPAL BALA</div>
+          <div class="eyebrow">
+            <span class="eyebrow__line">custom-agent-tools-and-runtime</span>
+            <span class="eyebrow__line">GOPAL BALA</span>
+          </div>
           <h1>Compact module for agent work</h1>
           <p>
             The framework keeps an agent run easy to follow: requests become messages,
