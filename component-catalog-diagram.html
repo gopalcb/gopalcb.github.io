@@ -167,50 +167,6 @@
 <li><span class="db-tree__folder">compact additions</span><ul><li><span class="db-tree__file">horizontal arrows</span></li>
 <li><span class="db-tree__file">animated arrows</span></li>
 <li><span class="db-tree__file">square nodes</span></li></ul></li></ul></div></section>
-<section class="db-diagram"><h2 class="db-diagram__heading">Renderer runtime shape</h2>
-<p class="db-diagram__note">The renderer combines the request, catalog, and stylesheet into output that is easy to inspect and reuse.</p>
-<div class="db-bus">
-  
-  <svg class="db-bus__connectors" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-    <defs>
-      <marker id="db-arrow" viewBox="0 0 12 9" refX="6" refY="0" markerWidth="12" markerHeight="9" orient="0">
-        <path d="M0,0 L12,0 L6,9 Z" />
-      </marker>
-    </defs>
-    <line x1="50" y1="9" x2="50" y2="15" />
-    <line x1="22.0" y1="15" x2="78.0" y2="15" />
-    <line x1="22.0" y1="15" x2="22.0" y2="19" /><line x1="22.0" y1="25" x2="22.0" y2="31" />
-<line x1="50.0" y1="15" x2="50.0" y2="19" /><line x1="50.0" y1="25" x2="50.0" y2="31" />
-<line x1="78.0" y1="15" x2="78.0" y2="19" /><line x1="78.0" y1="25" x2="78.0" y2="31" />
-    <line x1="22.0" y1="31" x2="78.0" y2="31" />
-    <line x1="50" y1="31" x2="50" y2="35" marker-end="url(#db-arrow)" />
-    <line x1="50" y1="41" x2="50" y2="47" />
-    <line x1="34.0" y1="47" x2="66.0" y2="47" />
-    <line x1="34.0" y1="47" x2="34.0" y2="52" />
-<line x1="66.0" y1="47" x2="66.0" y2="52" />
-    <line x1="50" y1="58" x2="50" y2="67" marker-end="url(#db-arrow)" />
-    <line x1="50" y1="73" x2="50" y2="79" />
-    <line x1="25.0" y1="79" x2="75.0" y2="79" />
-    <line x1="25.0" y1="79" x2="25.0" y2="80" />
-<line x1="50.0" y1="79" x2="50.0" y2="80" />
-<line x1="75.0" y1="79" x2="75.0" y2="80" />
-    <line x1="75.0" y1="84" x2="75.0" y2="91" marker-end="url(#db-arrow)" />
-  </svg>
-
-  <div class="db-bus__node db-bus__runtime" style="--db-x:50%;--db-y:6%;">Diagram request</div>
-  <div class="db-bus__node db-bus__source" style="--db-x:22.0%;--db-y:22%;">YAML document</div>
-<div class="db-bus__node db-bus__source" style="--db-x:50.0%;--db-y:22%;">component catalog</div>
-<div class="db-bus__node db-bus__source" style="--db-x:78.0%;--db-y:22%;">stylesheet</div>
-  <div class="db-bus__node db-bus__hub" style="--db-x:50%;--db-y:38%;">Renderer</div>
-  <div class="db-bus__node db-bus__output" style="--db-x:34.0%;--db-y:55%;">validated payload</div>
-<div class="db-bus__node db-bus__output" style="--db-x:66.0%;--db-y:55%;">HTML document</div><div class="db-bus__caption" style="--db-x:66.0%;--db-y:65%;">article diagram</div>
-  <div class="db-bus__node" style="--db-x:50%;--db-y:70%;">Reader output</div>
-  <div class="db-bus__node db-bus__artifact" style="--db-x:25.0%;--db-y:82%;">clean layout</div>
-<div class="db-bus__node db-bus__artifact" style="--db-x:50.0%;--db-y:82%;">stable arrows</div>
-<div class="db-bus__node db-bus__artifact" style="--db-x:75.0%;--db-y:82%;">reusable examples</div>
-  <div class="db-bus__caption" style="--db-x:75.0%;--db-y:94%;">faster future diagrams</div>
-</div>
-</section>
 <section class="db-diagram"><h2 class="db-diagram__heading">Vertical composition</h2><p class="db-diagram__note">Vertical stacks work well for process explanations: request, choice, component, then output.</p><div class="db-component-stack"><div class="db-component db-component--node-only db-component--compact">
 <div class="db-component__node" style="--db-x:50%;--db-y:50%;"><span class="db-component__text">Request</span></div>
 </div>
