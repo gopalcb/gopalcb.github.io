@@ -381,6 +381,10 @@ body {
   margin-block: -22px;
 }
 
+.db-component-guide .db-component--compact {
+  margin-block: 12px -12px;
+}
+
 .db-component__connectors {
   position: absolute;
   inset: 0;

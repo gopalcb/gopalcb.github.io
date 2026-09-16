@@ -247,28 +247,6 @@
         height: 7820px;
       }
 
-      .section-links {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-      }
-
-      .section-links a {
-        display: inline-flex;
-        align-items: center;
-        min-height: 28px;
-        padding: 5px 9px;
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        background: rgba(248, 246, 241, 0.9);
-        color: var(--accent);
-        font-size: 10px;
-        font-weight: 800;
-        text-decoration: none;
-        text-underline-offset: 3px;
-      }
-
       @media (max-width: 980px) {
         .layout {
           display: block;
@@ -327,9 +305,9 @@
   <body>
     <div class="layout">
       <aside class="tracker" aria-label="Playbook tracker">
-        <h2 class="tracker__title">Framework Flow</h2>
+        <h2 class="tracker__title">Process Flow</h2>
         <nav class="tracker__nav">
-          <a class="tracker__link is-active" data-step="01" href="#system">System map</a>
+          <a class="tracker__link" data-step="01" href="#system">System map</a>
           <a class="tracker__link" data-step="02" href="#messaging">Messaging flow</a>
           <a class="tracker__link" data-step="03" href="#diagram-builder">Diagram builder</a>
           <a class="tracker__link" data-step="04" href="#components">Components</a>
@@ -374,9 +352,6 @@
               The result becomes state an operator or another agent can inspect.
             </p>
           </div>
-          <div class="section-links">
-            <a href="runtime-tools-diagram.html">Open runtime diagram</a>
-          </div>
           <div class="diagram-shell diagram-shell--runtime">
             <iframe src="runtime-tools-diagram.html" title="Agent messaging, custom tools, memory, and runtime flow"></iframe>
           </div>
@@ -390,9 +365,6 @@
               The use case is simple: repeated visual choices become named components.
               The next article starts with cleaner shapes, cleaner YAML, and fewer layout decisions.
             </p>
-          </div>
-          <div class="section-links">
-            <a href="profile-diagram.html">Open memory-shaped diagram</a>
           </div>
           <div class="diagram-shell diagram-shell--memory">
             <iframe src="profile-diagram.html" title="Memory shaped clean diagram building"></iframe>
@@ -408,11 +380,6 @@
               all come from the same YAML-to-HTML path.
             </p>
           </div>
-          <div class="section-links">
-            <a href="component-catalog-diagram.html">Open component catalog diagram</a>
-            <a href="my-agentic-systems/">Open longer agent-system articles</a>
-            <a href="https://github.com/gopalcb">GitHub profile</a>
-          </div>
           <div class="diagram-shell diagram-shell--catalog">
             <iframe src="component-catalog-diagram.html" title="Component catalog and orchestration diagram"></iframe>
           </div>
@@ -425,23 +392,78 @@
       const sections = Array.from(document.querySelectorAll("[data-section]"));
       const linkById = new Map(links.map((link) => [link.getAttribute("href").slice(1), link]));
 
-      const observer = new IntersectionObserver((entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (!visible) {
-          return;
-        }
-
+      const setActive = (id) => {
         links.forEach((link) => link.classList.remove("is-active"));
-        const active = linkById.get(visible.target.id);
+        const active = linkById.get(id);
         if (active) {
           active.classList.add("is-active");
+          active.setAttribute("aria-current", "true");
         }
-      }, { rootMargin: "-18% 0px -58% 0px", threshold: [0.12, 0.28, 0.5] });
+        links.filter((link) => link !== active).forEach((link) => link.removeAttribute("aria-current"));
+      };
 
-      sections.forEach((section) => observer.observe(section));
+      const updateActiveSection = () => {
+        const anchor = window.scrollY + Math.min(window.innerHeight * 0.38, 360);
+        let current = sections[0];
+        sections.forEach((section) => {
+          if (section.offsetTop <= anchor) {
+            current = section;
+          }
+        });
+        if (current) {
+          setActive(current.id);
+        }
+      };
+
+      const scrollToSection = (id, behavior = "smooth") => {
+        const section = document.getElementById(id);
+        if (!section) {
+          return;
+        }
+        setActive(id);
+        const top = section.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top, behavior });
+      };
+
+      links.forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          const id = link.getAttribute("href").slice(1);
+          history.pushState(null, "", `#${id}`);
+          scrollToSection(id);
+        });
+      });
+
+      let frame = 0;
+      window.addEventListener("scroll", () => {
+        if (frame) {
+          return;
+        }
+        frame = window.requestAnimationFrame(() => {
+          frame = 0;
+          updateActiveSection();
+        });
+      }, { passive: true });
+
+      window.addEventListener("resize", updateActiveSection);
+      window.addEventListener("hashchange", () => {
+        const id = window.location.hash.slice(1);
+        if (id) {
+          scrollToSection(id, "auto");
+        }
+      });
+
+      updateActiveSection();
+
+      window.addEventListener("load", () => {
+        const id = window.location.hash.slice(1);
+        if (!id) {
+          updateActiveSection();
+          return;
+        }
+        scrollToSection(id, "auto");
+        window.setTimeout(() => scrollToSection(id, "auto"), 250);
+      });
     </script>
   </body>
 </html>
