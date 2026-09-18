@@ -426,6 +426,28 @@
       const links = Array.from(document.querySelectorAll(".tracker__link"));
       const sections = Array.from(document.querySelectorAll("[data-section]"));
       const linkById = new Map(links.map((link) => [link.getAttribute("href").slice(1), link]));
+      const defaultSectionId = sections[0]?.id || "system";
+      let navigationTarget = "";
+      let navigationTimer = 0;
+      let pageLoaded = document.readyState === "complete";
+
+      const sectionIdFromHash = () => {
+        const id = window.location.hash.slice(1);
+        return linkById.has(id) ? id : defaultSectionId;
+      };
+
+      const publishRouteChange = () => {
+        window.dispatchEvent(new CustomEvent("agent-systems:route-change"));
+      };
+
+      const updateHash = (id, mode = "replace") => {
+        const hash = `#${id}`;
+        if (window.location.hash === hash) {
+          return;
+        }
+        history[mode === "push" ? "pushState" : "replaceState"](null, "", hash);
+        publishRouteChange();
+      };
 
       const setActive = (id) => {
         links.forEach((link) => link.classList.remove("is-active"));
@@ -437,7 +459,7 @@
         links.filter((link) => link !== active).forEach((link) => link.removeAttribute("aria-current"));
       };
 
-      const updateActiveSection = () => {
+      const currentSection = () => {
         const anchor = window.scrollY + Math.min(window.innerHeight * 0.38, 360);
         let current = sections[0];
         sections.forEach((section) => {
@@ -445,9 +467,29 @@
             current = section;
           }
         });
+        return current;
+      };
+
+      const updateActiveSection = () => {
+        const current = currentSection();
         if (current) {
           setActive(current.id);
+          updateHash(current.id);
         }
+      };
+
+      const finishNavigation = () => {
+        const target = navigationTarget;
+        const current = currentSection();
+        if (target && current?.id !== target) {
+          const section = document.getElementById(target);
+          const top = target === "system" ? 0 : section.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({ top, behavior: "auto" });
+          navigationTimer = window.setTimeout(finishNavigation, 400);
+          return;
+        }
+        navigationTarget = "";
+        updateActiveSection();
       };
 
       const scrollToSection = (id, behavior = "smooth") => {
@@ -462,6 +504,11 @@
         }
         setActive(id);
         const top = section.getBoundingClientRect().top + window.scrollY;
+        navigationTarget = id;
+        window.clearTimeout(navigationTimer);
+        if (behavior === "smooth" || pageLoaded) {
+          navigationTimer = window.setTimeout(finishNavigation, behavior === "smooth" ? 1200 : 400);
+        }
         window.scrollTo({ top, behavior });
       };
 
@@ -469,7 +516,7 @@
         link.addEventListener("click", (event) => {
           event.preventDefault();
           const id = link.getAttribute("href").slice(1);
-          history.pushState(null, "", `#${id}`);
+          updateHash(id, "push");
           scrollToSection(id);
         });
       });
@@ -481,29 +528,35 @@
         }
         frame = window.requestAnimationFrame(() => {
           frame = 0;
+          if (navigationTarget) {
+            return;
+          }
           updateActiveSection();
         });
       }, { passive: true });
 
       window.addEventListener("resize", updateActiveSection);
       window.addEventListener("hashchange", () => {
-        const id = window.location.hash.slice(1);
-        if (id) {
-          scrollToSection(id, "auto");
-        }
+        const id = sectionIdFromHash();
+        updateHash(id);
+        scrollToSection(id, "auto");
       });
 
-      updateActiveSection();
+      const initialSectionId = sectionIdFromHash();
+      updateHash(initialSectionId);
+      setActive(initialSectionId);
+      scrollToSection(initialSectionId, "auto");
 
       window.addEventListener("load", () => {
-        const id = window.location.hash.slice(1);
-        if (!id) {
-          updateActiveSection();
-          return;
-        }
+        pageLoaded = true;
+        const id = sectionIdFromHash();
         scrollToSection(id, "auto");
-        window.setTimeout(() => scrollToSection(id, "auto"), 250);
+        window.setTimeout(() => {
+          scrollToSection(id, "auto");
+        }, 250);
       });
     </script>
+    <script src="runtime-config.js"></script>
+    <script src="assets/page-view-logging.js"></script>
   </body>
 </html>
