@@ -101,9 +101,9 @@
         font-weight: 800;
       }
 
+      input,
       textarea {
         width: 100%;
-        min-height: 180px;
         padding: 14px 16px;
         border: 1px solid var(--border);
         border-radius: var(--radius);
@@ -115,6 +115,15 @@
         transition: border-color 160ms ease, box-shadow 160ms ease;
       }
 
+      input {
+        min-height: 48px;
+      }
+
+      textarea {
+        min-height: 180px;
+      }
+
+      input::placeholder,
       textarea::placeholder {
         color: #898b84;
       }
@@ -123,10 +132,12 @@
         resize: none;
       }
 
+      input:hover,
       textarea:hover {
         border-color: #b8b2a6;
       }
 
+      input:focus-visible,
       textarea:focus-visible,
       button:focus-visible,
       .back-link:focus-visible {
@@ -134,6 +145,7 @@
         outline-offset: 3px;
       }
 
+      input[aria-invalid="true"],
       textarea[aria-invalid="true"] {
         border-color: var(--danger);
       }
@@ -147,20 +159,6 @@
         color: var(--text-soft);
         font-size: 12px;
         line-height: 1.5;
-      }
-
-      .mock-note {
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-      }
-
-      .mock-note::before {
-        content: "";
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: #b58133;
       }
 
       .actions {
@@ -253,18 +251,30 @@
         </p>
 
         <form id="contact-form" novalidate>
+          <label for="email">Your email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            maxlength="254"
+            required
+            aria-describedby="form-status"
+            placeholder="you@example.com"
+          >
+
           <label for="message">Your message</label>
           <textarea
             class="resize-none"
             id="message"
             name="message"
             maxlength="2000"
+            required
             aria-describedby="message-help form-status"
             placeholder="What would you like to talk about?"
           ></textarea>
 
           <div class="form-meta" id="message-help">
-            <span class="mock-note">Demo delivery only — the endpoint does not retain messages.</span>
             <span id="message-count">0 / 2000</span>
           </div>
 
@@ -277,8 +287,9 @@
     </main>
 
     <script>
-      const MOCK_ENDPOINT = "https://jsonplaceholder.typicode.com/posts";
+      const CONTACT_ENDPOINT = "https://ffb9et6xxi.execute-api.ca-central-1.amazonaws.com/contact";
       const form = document.querySelector("#contact-form");
+      const email = document.querySelector("#email");
       const message = document.querySelector("#message");
       const messageCount = document.querySelector("#message-count");
       const sendButton = document.querySelector("#send-button");
@@ -288,6 +299,14 @@
         status.textContent = text;
         status.dataset.state = state;
       }
+
+      email.addEventListener("input", () => {
+        email.removeAttribute("aria-invalid");
+
+        if (status.dataset.state === "error") {
+          setStatus("");
+        }
+      });
 
       message.addEventListener("input", () => {
         messageCount.textContent = `${message.value.length} / 2000`;
@@ -300,9 +319,17 @@
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
-        const value = message.value.trim();
+        const emailValue = email.value.trim();
+        const messageValue = message.value.trim();
 
-        if (!value) {
+        if (!emailValue || !email.validity.valid) {
+          email.setAttribute("aria-invalid", "true");
+          setStatus("Enter a valid email address.", "error");
+          email.focus();
+          return;
+        }
+
+        if (!messageValue) {
           message.setAttribute("aria-invalid", "true");
           setStatus("Write a message before sending.", "error");
           message.focus();
@@ -311,24 +338,25 @@
 
         sendButton.disabled = true;
         sendButton.textContent = "Sending…";
-        setStatus("Sending your demo message…");
+        setStatus("Sending your message…");
 
         try {
-          const response = await fetch(MOCK_ENDPOINT, {
+          const response = await fetch(CONTACT_ENDPOINT, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: value }),
+            body: JSON.stringify({ email: emailValue, message: messageValue }),
           });
 
           if (!response.ok) {
-            throw new Error(`Mock endpoint returned ${response.status}`);
+            throw new Error(`Contact endpoint returned ${response.status}`);
           }
 
+          email.value = "";
           message.value = "";
           messageCount.textContent = "0 / 2000";
-          setStatus("Demo message sent successfully.", "success");
+          setStatus("Thank you for contacting me. Your message has been sent.", "success");
         } catch (error) {
-          setStatus("The demo endpoint could not receive the message. Please try again.", "error");
+          setStatus("Your message could not be sent. Please try again.", "error");
         } finally {
           sendButton.disabled = false;
           sendButton.textContent = "Send message";
