@@ -1,0 +1,343 @@
+---
+layout: null
+permalink: /contact/
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Send a message to Gopal C. Bala.">
+    <title>Contact Gopal C. Bala</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f8f6f1;
+        --surface: #fffdf8;
+        --surface-soft: #ece9e2;
+        --text: #242521;
+        --text-soft: #676961;
+        --border: #d8d3c9;
+        --accent: #48675e;
+        --accent-dark: #365149;
+        --accent-soft: #dce6e1;
+        --danger: #9a3f39;
+        --success: #356858;
+        --shadow: 0 18px 34px rgba(37, 37, 32, 0.08);
+        --radius: 4px;
+        --font: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        padding: 32px 20px;
+        background:
+          linear-gradient(rgba(72, 103, 94, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(72, 103, 94, 0.05) 1px, transparent 1px),
+          var(--bg);
+        background-size: 32px 32px;
+        color: var(--text);
+        font-family: var(--font);
+      }
+
+      main {
+        width: min(680px, 100%);
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        margin-bottom: 16px;
+        color: var(--accent);
+        font-size: 13px;
+        font-weight: 750;
+        text-underline-offset: 4px;
+      }
+
+      .contact-card {
+        padding: clamp(24px, 6vw, 48px);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: rgba(255, 253, 248, 0.96);
+        box-shadow: var(--shadow);
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        color: var(--accent);
+        font-size: 11px;
+        font-weight: 850;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 16ch;
+        font-size: clamp(30px, 7vw, 52px);
+        line-height: 1.02;
+        letter-spacing: -0.04em;
+      }
+
+      .intro {
+        margin: 18px 0 30px;
+        max-width: 54ch;
+        color: var(--text-soft);
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+      form {
+        display: grid;
+        gap: 12px;
+      }
+
+      label {
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 180px;
+        padding: 14px 16px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
+        color: var(--text);
+        font: inherit;
+        font-size: 15px;
+        line-height: 1.55;
+        transition: border-color 160ms ease, box-shadow 160ms ease;
+      }
+
+      textarea::placeholder {
+        color: #898b84;
+      }
+
+      .resize-none {
+        resize: none;
+      }
+
+      textarea:hover {
+        border-color: #b8b2a6;
+      }
+
+      textarea:focus-visible,
+      button:focus-visible,
+      .back-link:focus-visible {
+        outline: 3px solid var(--accent-soft);
+        outline-offset: 3px;
+      }
+
+      textarea[aria-invalid="true"] {
+        border-color: var(--danger);
+      }
+
+      .form-meta {
+        min-height: 22px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 8px 16px;
+        color: var(--text-soft);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .mock-note {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+      }
+
+      .mock-note::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #b58133;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 4px;
+      }
+
+      button {
+        min-width: 124px;
+        min-height: 46px;
+        padding: 0 22px;
+        border: 1px solid var(--accent);
+        border-radius: var(--radius);
+        background: var(--accent);
+        color: #ffffff;
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 800;
+        transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+      }
+
+      button:hover:not(:disabled) {
+        border-color: var(--accent-dark);
+        background: var(--accent-dark);
+        transform: translateY(-1px);
+      }
+
+      button:active:not(:disabled) {
+        transform: translateY(0);
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.62;
+      }
+
+      .status {
+        min-height: 22px;
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .status[data-state="error"] {
+        color: var(--danger);
+      }
+
+      .status[data-state="success"] {
+        color: var(--success);
+      }
+
+      @media (max-width: 520px) {
+        body {
+          place-items: start center;
+          padding: 20px 14px 32px;
+        }
+
+        .actions {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        button {
+          width: 100%;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="back-link" href="/">← Back to Gopal’s work</a>
+
+      <section class="contact-card" aria-labelledby="contact-title">
+        <p class="eyebrow">A direct line</p>
+        <h1 id="contact-title">Let’s build something thoughtful.</h1>
+        <p class="intro">
+          Have an idea about agent systems, APIs, or cloud platforms? Leave a note and tell me what you’re exploring.
+        </p>
+
+        <form id="contact-form" novalidate>
+          <label for="message">Your message</label>
+          <textarea
+            class="resize-none"
+            id="message"
+            name="message"
+            maxlength="2000"
+            aria-describedby="message-help form-status"
+            placeholder="What would you like to talk about?"
+          ></textarea>
+
+          <div class="form-meta" id="message-help">
+            <span class="mock-note">Demo delivery only — the endpoint does not retain messages.</span>
+            <span id="message-count">0 / 2000</span>
+          </div>
+
+          <div class="actions">
+            <button id="send-button" type="submit">Send message</button>
+            <p class="status" id="form-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script>
+      const MOCK_ENDPOINT = "https://jsonplaceholder.typicode.com/posts";
+      const form = document.querySelector("#contact-form");
+      const message = document.querySelector("#message");
+      const messageCount = document.querySelector("#message-count");
+      const sendButton = document.querySelector("#send-button");
+      const status = document.querySelector("#form-status");
+
+      function setStatus(text, state = "") {
+        status.textContent = text;
+        status.dataset.state = state;
+      }
+
+      message.addEventListener("input", () => {
+        messageCount.textContent = `${message.value.length} / 2000`;
+        message.removeAttribute("aria-invalid");
+
+        if (status.dataset.state === "error") {
+          setStatus("");
+        }
+      });
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const value = message.value.trim();
+
+        if (!value) {
+          message.setAttribute("aria-invalid", "true");
+          setStatus("Write a message before sending.", "error");
+          message.focus();
+          return;
+        }
+
+        sendButton.disabled = true;
+        sendButton.textContent = "Sending…";
+        setStatus("Sending your demo message…");
+
+        try {
+          const response = await fetch(MOCK_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: value }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`Mock endpoint returned ${response.status}`);
+          }
+
+          message.value = "";
+          messageCount.textContent = "0 / 2000";
+          setStatus("Demo message sent successfully.", "success");
+        } catch (error) {
+          setStatus("The demo endpoint could not receive the message. Please try again.", "error");
+        } finally {
+          sendButton.disabled = false;
+          sendButton.textContent = "Send message";
+        }
+      });
+    </script>
+  </body>
+</html>
