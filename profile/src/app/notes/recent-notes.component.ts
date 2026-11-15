@@ -19,7 +19,7 @@ export const COGNITIVE_MEMORY_NOTE_ID = 'building-a-local-first-cognitive-memory
       <button woButton type="button" [attr.aria-pressed]="selected() === 'memory'"
         aria-controls="recent-note-article" (click)="selected.set('memory')">Codex cognitive memory</button>
       <button woButton type="button" [attr.aria-pressed]="selected() === 'bff'"
-        aria-controls="recent-note-article" (click)="selected.set('bff')">AI BFF</button>
+        aria-controls="recent-note-article" (click)="selected.set('bff')">AI backend for frontend</button>
     </div>
     <section id="recent-note-article" aria-labelledby="recent-note-title">
       @if (selected() === 'bff' || memoryNote()) {
