@@ -1,0 +1,64 @@
+<div class="tm-select" (keydown)="key($event)">
+  <button
+    #trigger
+    type="button"
+    class="tm-select-trigger"
+    role="combobox"
+    [disabled]="disabled"
+    [attr.aria-label]="label"
+    aria-haspopup="listbox"
+    [attr.aria-expanded]="open"
+    [attr.aria-controls]="id"
+    [attr.aria-activedescendant]="open ? id + '-' + active : null"
+    (click)="toggle()"
+  >
+    <span class="tm-select-value">{{ selectedLabel }}</span
+    ><svg
+      class="tm-select-chevron"
+      width="14"
+      height="14"
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.7"
+      aria-hidden="true"
+    >
+      <path d="m5 7.5 5 5 5-5" />
+    </svg>
+  </button>
+  <div
+    #menu
+    class="tm-select-menu wo-dropdown-surface"
+    [attr.inert]="open ? null : ''"
+    role="listbox"
+    [id]="id"
+    [attr.aria-label]="label"
+    [attr.popover]="supportsPopover ? 'manual' : null"
+    hidden
+  >
+    @for (option of options; track option.value; let i = $index) {
+      <button
+        type="button"
+        tabindex="-1"
+        role="option"
+        class="tm-select-option"
+        [class.active]="i === active"
+        [id]="id + '-' + i"
+        [attr.aria-selected]="option.value === value"
+        (click)="choose(option.value)"
+      >
+        <span class="tm-select-option-copy"
+          ><span>{{ option.label }}</span>
+          @if (option.description) {
+            <small>{{ option.description }}</small>
+          }</span
+        ><span class="tm-select-check" aria-hidden="true"
+          ><wo-icon name="check" [style.visibility]="option.value === value ? 'visible' : 'hidden'"
+        /></span>
+      </button>
+    }
+    @if (!options.length) {
+      <p class="tm-select-empty">No options available</p>
+    }
+  </div>
+</div>

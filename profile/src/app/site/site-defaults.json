@@ -1,0 +1,15 @@
+{
+  "readerLayout": {
+    "leftPercent": 30
+  },
+  "headerMenus": [],
+  "pageComponents": [
+    {
+      "id": "card",
+      "name": "Card component",
+      "html": "<a class=\"card\" href=\"{{link}}\"><div class=\"top\"><span class=\"symbol\">{{symbol}}</span><small>{{meta}}</small></div><h2>{{title}}</h2><p>{{description}}</p><footer><span>{{tags}}</span><span aria-hidden=\"true\">→</span></footer></a>",
+      "css": ":host{display:block;height:100%}.card{box-sizing:border-box;display:flex;flex-direction:column;gap:16px;padding:20px;height:100%;min-height:184px;border:1px solid #dde5e2;border-radius:4px;background:#fff;color:#202936;text-decoration:none;font:13px/1.6 system-ui}.card:hover{border-color:#167b70;box-shadow:0 4px 16px #183d2910}.card:focus-visible{outline:3px solid #217eae;outline-offset:2px}.top,footer{display:flex;align-items:center;justify-content:space-between;gap:12px}.symbol{display:grid;place-items:center;width:40px;height:40px;background:#eaf1ed;border:1px solid #cbded5;border-radius:7px;color:#167b70;font:17px monospace}small{color:#596b70;font:9px monospace}h2{font-size:14px;line-height:1.35;margin:0}p{font-size:11px;color:#596b70;margin:0}footer{margin-top:auto;color:#167b70;font:9px monospace}",
+      "js": ""
+    }
+  ]
+}
