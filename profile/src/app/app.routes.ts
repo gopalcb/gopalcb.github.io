@@ -3,6 +3,15 @@ import { NotesStore } from "./notes/notes.store";
 import { RedirectCommand, Router, Routes } from "@angular/router";
 export const routes: Routes = [
   {
+    matcher: (segments) =>
+      segments[0]?.path === "projects-and-nodex" &&
+      (segments.length === 1 ||
+        (segments.length === 2 && segments[1].path === ""))
+        ? { consumed: segments }
+        : null,
+    redirectTo: "/projects-and-notes",
+  },
+  {
     path: "",
     redirectTo: () => inject(NotesStore).homePath,
     pathMatch: "full",

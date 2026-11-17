@@ -1905,7 +1905,7 @@
     {
       "id": "notes",
       "label": "Projects & Notes",
-      "slug": "projects-and-nodex",
+      "slug": "projects-and-notes",
       "published": true,
       "page": {
         "kind": "notes",
