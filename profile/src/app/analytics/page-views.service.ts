@@ -42,12 +42,6 @@ export class PageViewsService {
       if (path === "/admin" || path.startsWith("/admin/")) return;
       const now = Date.now();
       const session = this.session(now);
-      const metadata = {
-        language: win.navigator.language.slice(0, 200),
-        browser_timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        viewport_width: Math.min(win.innerWidth, 20000),
-        referrer_host: this.document.referrer ? new URL(this.document.referrer).hostname : "",
-      };
       void fetch(PAGE_VIEW_ENDPOINT, {
         method: "POST",
         mode: "cors",
@@ -55,17 +49,8 @@ export class PageViewsService {
         keepalive: true,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          application: "self-made-dev",
-          session,
-          event_id: crypto.randomUUID(),
-          event_type: "page_view",
-          action: "",
-          target: "",
-          get_project: "",
-          page_path: path.slice(0, 512),
-          page_title: this.document.title.slice(0, 200),
-          client_timestamp: new Date(now).toISOString(),
-          metadata,
+          // Separators are JSON body data, not a URL fragment.
+          page_path: `${path.slice(0, 512)}#${session}#${crypto.randomUUID()}`,
         }),
       }).catch(() => undefined);
     } catch {
