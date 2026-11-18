@@ -1,3 +1,4 @@
+import { IntroHeadingComponent } from "./intro-heading.component";
 import { faDiagramProject, faKey, faDharmachakra, faRobot, faListCheck, faServer, faTerminal, faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { SiteFrameComponent } from "../site/site-frame.component";
 import { CARD_COMPONENT, PageBlock } from "../site/site-models";
@@ -5,8 +6,9 @@ import { Component, inject } from "@angular/core";
 import { NotesStore, Topic } from "./notes.store";
 @Component({
   selector: "site-library",
-  imports: [SiteFrameComponent],
+  imports: [SiteFrameComponent, IntroHeadingComponent],
   template: ` <div class="library page-width">
+    <site-intro-heading />
     <div class="library-bar">
       <div>
         <strong>Explore topics</strong

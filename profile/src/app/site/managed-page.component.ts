@@ -1,5 +1,3 @@
-import { RecentNotesComponent } from '../notes/recent-notes.component';
-import { IntroHeadingComponent } from '../notes/intro-heading.component';
 import { AsyncPipe } from "@angular/common";
 import { MarkdownService } from "ngx-markdown";
 import { NoteHtmlPipe } from "../notes/note-html.pipe";
@@ -13,8 +11,6 @@ import { SiteFrameComponent } from "./site-frame.component";
 @Component({
   providers: [MarkdownService],
   imports: [
-    IntroHeadingComponent,
-    RecentNotesComponent,
     AsyncPipe,
     NoteHtmlPipe,
     LibraryComponent,
@@ -33,10 +29,6 @@ import { SiteFrameComponent } from "./site-frame.component";
             [class.home-article-page]="menu.id === 'home'"
             [class.about-me-page]="menu.id === 'about-me'"
           >
-            @if (menu.id === 'home') {
-              <site-intro-heading />
-              <site-recent-notes [bffContent]="menu.page.content" />
-            }
             @if (menu.id === 'about-me') {
               <header
                 class="about-me-profile"

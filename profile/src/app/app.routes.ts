@@ -13,15 +13,13 @@ export const routes: Routes = [
   },
   {
     path: "",
-    redirectTo: () => inject(NotesStore).homePath,
+    redirectTo: "/projects-and-notes",
     pathMatch: "full",
   },
   {
     path: "home",
-    loadComponent: () =>
-      import("./site/managed-page.component").then(
-        (m) => m.ManagedPageComponent,
-      ),
+    redirectTo: "/projects-and-notes",
+    pathMatch: "full",
   },
   {
     path: "notes",

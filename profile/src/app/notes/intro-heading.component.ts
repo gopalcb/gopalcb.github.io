@@ -10,7 +10,7 @@ import { Component, NgZone, OnDestroy, OnInit, inject, signal } from '@angular/c
     </div>
 `})
 export class IntroHeadingComponent implements OnInit, OnDestroy {
-  readonly headingText = "Hi, I am Gopal 👋. I am a self-taught fullstack software engineer with experience building reactive production systems. I am a voracious reader and a quick learner. I bring a strong work ethic and I value teamwork and collaboration above all.";
+  readonly headingText = "Hi, I am Gopal 👋. Full-stack software engineer experienced in designing, developing and deploying production systems. My core stack includes TypeScript, Python, FastAPI, Node.js and NestJS along with architecting and provisioning AWS with Terraform.";
   readonly typedHeading = signal("");
   private readonly document = inject(DOCUMENT);
   private readonly zone = inject(NgZone);
