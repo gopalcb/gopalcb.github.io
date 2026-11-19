@@ -12,11 +12,7 @@ import { NotesStore } from "../../notes/notes.store";
     [style.--wo-ink]="store.theme().ink"
   >
     <a class="skip-link" href="#main">Skip to content</a>
-    <header class="wo-header">
-      <a class="wo-brand brand" [routerLink]="store.homePath"
-        ><span class="brand-mark" aria-hidden="true">&lt;/&gt;</span> Chandra's
-        Notes &amp; Projects</a
-      >
+    <div class="notes-navigation page-width">
       <nav class="wo-header-nav" aria-label="Main navigation">
         @for (menu of store.headerMenus(); track menu.id) {
           @if (menu.published) {
@@ -29,7 +25,7 @@ import { NotesStore } from "../../notes/notes.store";
           }
         }
       </nav>
-    </header>
+    </div>
     <main id="main" tabindex="-1"><router-outlet /></main>
     <div class="global-feedback" aria-live="polite">
       @if (store.error()) {

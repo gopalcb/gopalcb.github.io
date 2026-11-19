@@ -5,7 +5,7 @@ import { Component, inject } from "@angular/core";
 import { NotesStore, Topic } from "./notes.store";
 @Component({
   selector: "site-library",
-  styles: `.homelab-banner { display: block; width: 100%; height: auto; margin: 0 0 24px; }`,
+  styles: `.homelab-banner { display: block; width: 100%; height: auto; margin: 0 0 24px; background: #ffffff; color-scheme: only light; }`,
   imports: [SiteFrameComponent],
   template: ` <div class="library page-width">
     <img

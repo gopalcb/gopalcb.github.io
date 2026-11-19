@@ -127,36 +127,39 @@ small {
   flex: 1;
   color: var(--wo-ink);
 }
-.notes-shell .wo-header {
-  padding-inline: 36px;
-}
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 27px;
-  height: 27px;
-  border: 1px solid #b9d4cb;
-  border-radius: 5px;
-  font-family: "Roboto Mono", monospace;
-  font-size: 12px;
-}
-.brand-caption {
-  font-size: 10px;
-  font-weight: 400;
-  color: var(--notes-muted);
-  margin-left: 6px;
-}
 .notes-shell .wo-header-nav a {
   font-size: 9px;
   letter-spacing: 0.07em;
 }
-.notes-shell .wo-header-nav {
-  gap: 32px;
+/* Navigation shares the content edge without a separate header surface. */
+.notes-shell .notes-navigation {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding-block: 12px;
+  position: static;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.notes-shell .notes-navigation .wo-header-nav {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 24px;
+  width: auto;
+  margin: 0;
+  order: 0;
+}
+.notes-shell .notes-navigation .wo-header-nav a {
+  min-height: 28px;
+}
+.notes-shell .notes-navigation .wo-header-nav a::after {
+  bottom: 0;
+}
+.notes-navigation .account {
+  margin-left: auto;
 }
 .account {
   position: relative;
@@ -843,20 +846,10 @@ small {
     scrollbar-color: auto;
   }
 }
-/* Notes shell keeps the inherited header style with room for its full brand. */
-.notes-shell .wo-header {
-  grid-template-columns: minmax(280px, 1fr) auto minmax(160px, 1fr);
-}
-.notes-shell .wo-brand {
-  letter-spacing: 0.2px;
-}
 .notes-shell .tm-select-trigger {
   font-size: 11px;
 }
-.notes-shell .brand-caption {
-  letter-spacing: normal;
-}
-
+.notes-shell 
 .reading-pane .reader-article {
   background: transparent;
   border: 0;
@@ -1187,10 +1180,6 @@ small {
 }
 .about-me-page .prose > ul > li:last-child {
   margin-bottom: 0;
-}
-.notes-shell .wo-header-nav {
-  flex-wrap: wrap;
-  column-gap: 24px;
 }
 .prose img,
 .prose video {
