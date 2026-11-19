@@ -1,4 +1,3 @@
-import { IntroHeadingComponent } from "./intro-heading.component";
 import { faDiagramProject, faKey, faDharmachakra, faRobot, faListCheck, faServer, faTerminal, faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { SiteFrameComponent } from "../site/site-frame.component";
 import { CARD_COMPONENT, PageBlock } from "../site/site-models";
@@ -6,9 +5,16 @@ import { Component, inject } from "@angular/core";
 import { NotesStore, Topic } from "./notes.store";
 @Component({
   selector: "site-library",
-  imports: [SiteFrameComponent, IntroHeadingComponent],
+  styles: `.homelab-banner { display: block; width: 100%; height: auto; margin: 0 0 24px; }`,
+  imports: [SiteFrameComponent],
   template: ` <div class="library page-width">
-    <site-intro-heading />
+    <img
+      class="homelab-banner"
+      src="homelab.png"
+      width="1407"
+      height="450"
+      alt="Home lab architecture with an Acer gateway, Docker services, and local AI machines on a VLAN"
+    />
     <div class="library-bar">
       <div>
         <strong>Explore topics</strong
