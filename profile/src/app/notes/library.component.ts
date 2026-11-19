@@ -10,7 +10,7 @@ import { NotesStore, Topic } from "./notes.store";
   template: ` <div class="library page-width">
     <img
       class="homelab-banner"
-      src="homelab.svg"
+      src="homelab2.svg"
       width="1407"
       height="450"
       alt="Home lab architecture with an Acer gateway, Docker services, and local AI machines on a VLAN"
