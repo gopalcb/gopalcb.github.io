@@ -5,7 +5,20 @@ import { Component, inject } from "@angular/core";
 import { NotesStore, Topic } from "./notes.store";
 @Component({
   selector: "site-library",
-  styles: `.homelab-banner { display: block; width: 100%; height: auto; margin: 0 0 24px; background: transparent; color-scheme: only light; }`,
+  styles: `
+    .homelab-banner {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      height: auto;
+      margin: 0 0 24px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--paper);
+      color-scheme: dark;
+    }
+  `,
   imports: [SiteFrameComponent],
   template: ` <div class="library page-width">
     <img
@@ -60,7 +73,7 @@ export class LibraryComponent {
           tags: t.tags,
           symbol: t.glyph,
           meta: this.topicCounts(t.id),
-          link: "/notes/topic/" + t.id,
+          link: this.store.topicPath(t.id),
         },
       }));
   }
@@ -100,9 +113,6 @@ export class LibraryComponent {
     }))];
   }
   allowedPaths() {
-    return this.store
-      .headerMenus()
-      .filter((m) => m.published)
-      .map((m) => "/" + m.slug);
+    return this.store.contentPaths();
   }
 }

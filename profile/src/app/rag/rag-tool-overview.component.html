@@ -1,0 +1,107 @@
+<!-- The keyed case keeps every connector and card on the same animation timeline. -->
+@for (item of visibleCases(); track item.id) {
+  <figure class="overview" [class]="item.id" [attr.aria-labelledby]="'rag-overview-title-' + item.id">
+    <figcaption class="overview-heading">
+      <h1 [id]="'rag-overview-title-' + item.id">Orchestration case {{ item.number }}: {{ item.title }}</h1>
+      @if ($first && guidePath(); as guide) {
+        <a woButton class="explore-link" [routerLink]="guide">Explore in depth <wo-icon name="arrow" /></a>
+      }
+    </figcaption>
+
+    <div class="flow">
+      <span class="case-clock" aria-hidden="true" (animationend)="advanceCase()"></span>
+      <div class="node intake">
+        <wo-icon name="agents" />
+        <div>
+          <strong>Main CLI agent</strong>
+          <span>{{ item.id === "skip" ? "Greeting or explicit retrieval opt-out" : "Refines the task into a query and keywords" }}</span>
+        </div>
+      </div>
+
+      @if (item.id !== "skip") {
+        <div class="exchange">
+          <div class="wire right request-wire"><span class="wire-label">Query + keywords</span></div>
+          <div class="wire left reply-wire"><span class="wire-label">{{ item.reply }}</span></div>
+        </div>
+        <div class="node coordinator">
+          <wo-icon name="projects" />
+          <div>
+            <strong>Coordinator agent</strong>
+            <span>Hybrid search · vectors, keywords and code graph</span>
+          </div>
+        </div>
+
+        <div class="lookup-wires" aria-hidden="true">
+          <div class="wire down lookup-wire"></div>
+          <div class="wire up verdict-wire"></div>
+        </div>
+        <div class="node result">
+          <wo-icon name="search" />
+          <div>
+            <strong>{{ item.result }}</strong>
+            <span>{{ item.evidence }}</span>
+          </div>
+        </div>
+
+        <div class="wire down planning-wire"><span class="wire-label">After reply</span></div>
+        <div class="node plan">
+          <wo-icon name="workBoard" />
+          <div>
+            <strong>{{ item.plan }}</strong>
+            <span>{{ item.planDetail }}</span>
+          </div>
+        </div>
+        <div class="wire right work-wire" aria-hidden="true"></div>
+      } @else {
+        <div class="wire right skip-wire"><span class="wire-label">Lookup skipped</span></div>
+      }
+
+      <div class="node complete">
+        <wo-icon name="check" />
+        <div>
+          <strong>{{ item.id === "skip" ? "Main agent responds directly" : "Main agent implements and verifies" }}</strong>
+          <span>{{ item.id === "skip" ? "Handles the request and verifies any changes" : "Carries out the plan and validates the changes" }}</span>
+        </div>
+      </div>
+
+      <div class="wire down handoff-wire"><span class="wire-label">If files changed</span></div>
+      <div class="node report">
+        <wo-icon name="file" />
+        <div>
+          <strong>Main agent reports implementation</strong>
+          <span>Sends the summary, key decisions and changed files to the coordinator</span>
+        </div>
+      </div>
+
+      <div class="wire left embed-wire" aria-hidden="true"></div>
+      <div class="node embed">
+        <wo-icon name="memory" />
+        <div>
+          <strong>Coordinator embeds the changes</strong>
+          <span>Splits Python and Markdown into chunks and generates vectors</span>
+        </div>
+      </div>
+
+      <div class="wire down store-wire" aria-hidden="true"></div>
+      <div class="node store">
+        <wo-icon name="check" />
+        <div>
+          <strong>Memory ready for future lookups</strong>
+          <span>Stores vectors in ChromaDB and updates SQLite search indexes</span>
+        </div>
+      </div>
+
+      @if (sharingPath(); as sharing) {
+        <div class="share-branch" aria-hidden="true"></div>
+        <a class="node sharing" [routerLink]="sharing">
+          <wo-icon name="file" />
+          <span>
+            <strong>Share Markdown files</strong>
+            <span>Optional · share agent output</span>
+          </span>
+          <wo-icon name="arrow" />
+        </a>
+      }
+    </div>
+  </figure>
+}

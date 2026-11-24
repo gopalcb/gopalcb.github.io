@@ -1,0 +1,99 @@
+/* Imported gb-portfolio styles. Every selector is scoped to the shared monorepo shell. */
+.monorepo-theme {
+  /* Exact Material slate canvas used by the referenced documentation page. */
+  --page: #1e2129;
+  --paper: #262b35;
+  --ink: #e1e5ec;
+  --muted: #aeb5c1;
+  --line: #3b424f;
+  --header: #3749a5;
+  --header-deep: #2e3d8a;
+  --accent: #ba5a32;
+  --accent-soft: #312a29;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: Roboto, Arial, sans-serif;
+  --content-font-size: 15px;
+  --sidebar-width: 360px;
+}
+
+.monorepo-theme * { box-sizing: border-box; }
+.monorepo-theme { scroll-behavior: smooth; }
+.monorepo-theme { margin: 0; padding-top: 52px; color: var(--ink); background: var(--page); font-family: var(--sans); font-size: .8rem; line-height: 1.6; }
+.monorepo-theme a { color: inherit; }
+.monorepo-theme .site-header { position: fixed; inset: 0 0 auto; z-index: 10; min-height: 52px; padding: 0 7vw; display: flex; align-items: center; justify-content: space-between; background: var(--header); color: #fff; box-shadow: 0 2px 9px rgba(0, 0, 0, .42); }
+.monorepo-theme .brand, .monorepo-theme .github-link { display: inline-flex; align-items: center; gap: .7rem; color: #f7f8ff; font-family: var(--sans); text-decoration: none; font-weight: 500; }
+.monorepo-theme .brand { font-size: calc(.9rem - 2px); letter-spacing: 0; }
+.monorepo-theme .brand strong { color: inherit; font-weight: 500; }
+.monorepo-theme .brand-mark { display: grid; place-items: center; width: 31px; height: 31px; border: 1px solid #9fcacb; border-radius: 50%; font: 700 .66rem/1 var(--sans); letter-spacing: .08em; }
+.monorepo-theme .github-link { font-size: calc(.8rem - 2px); letter-spacing: 0; padding: .45rem .25rem; border: 0; border-radius: 0; }
+.monorepo-theme .github-link:hover { color: #dbe1ff; }
+.monorepo-theme .github-link svg { width: 17px; fill: currentColor; }
+.monorepo-theme .page-shell { max-width: 1720px; min-height: calc(100vh - 64px); margin: 0 auto; display: grid; grid-template-columns: var(--sidebar-width) minmax(0, 760px); justify-content: space-between; gap: 2rem; padding: 3.5rem clamp(2rem, 5vw, 5rem) 5rem; }
+.monorepo-theme .sidebar { position: sticky; top: 84px; align-self: start; font-size: .91rem; color: var(--muted); }
+.monorepo-theme .sidebar-label, .monorepo-theme .eyebrow { margin: 0 0 .75rem; color: var(--accent); font-size: .71rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.monorepo-theme .sidebar nav { display: block; }
+.monorepo-theme .nav-project { display: block; }
+.monorepo-theme .nav-project + .nav-project { margin-top: 1.5rem; }
+.monorepo-theme .project-link { display: flex; align-items: flex-start; gap: .45rem; padding: 0 0 .65rem; color: #e1e5ec; font-size: .8rem; font-weight: 700; line-height: 1.25; overflow-wrap: anywhere; text-decoration: none; }
+.monorepo-theme .folder-icon { flex: 0 0 auto; width: .95rem; height: .95rem; margin-top: .02rem; fill: currentColor; }
+.monorepo-theme .project-link:hover, .monorepo-theme .project-link:focus-visible { color: #6ee7d2; outline: none; }
+.monorepo-theme .nav-project.project-active .project-link { color: #6ee7d2; text-shadow: 0 0 11px rgba(110, 231, 210, .42); }
+.monorepo-theme .project-items { border-left: 1px solid var(--line); }
+.monorepo-theme .nav-project .nav-link { position: relative; display: block; margin-left: 0; padding: .42rem 0 .42rem 1rem; text-decoration: none; }
+.monorepo-theme .nav-link:hover, .monorepo-theme .nav-link:focus-visible, .monorepo-theme .nav-link.active { color: #6ee7d2; outline: none; }
+.monorepo-theme .nav-link.active::after { content: ""; position: absolute; top: 50%; left: -1px; width: 2px; height: 1.4rem; background: currentColor; transform: translateY(-50%); }
+.monorepo-theme .sidebar-note { display: flex; gap: .55rem; margin-top: 2rem; padding-top: 1.35rem; border-top: 1px solid var(--line); font-size: .75rem; line-height: 1.45; }
+.monorepo-theme .note-dot { flex: 0 0 auto; width: 8px; height: 8px; margin-top: .23rem; background: #5e9375; border-radius: 50%; }
+.monorepo-theme .content { min-width: 0; justify-self: end; width: 100%; }
+.monorepo-theme .documentation { max-width: 760px; }
+.monorepo-theme .intro { max-width: 760px; padding: 1rem 0 3.4rem; }
+.monorepo-theme h1, .monorepo-theme h2, .monorepo-theme h3, .monorepo-theme p { margin-top: 0; }
+.monorepo-theme h1, .monorepo-theme h2, .monorepo-theme h3 { font-family: var(--sans); font-weight: 400; letter-spacing: .015em; line-height: 1.2; text-transform: uppercase; }
+.monorepo-theme h1 { max-width: 740px; margin-bottom: 1.35rem; font-size: 2em; }
+.monorepo-theme h1 em { color: inherit; font-weight: inherit; }
+.monorepo-theme h2 { max-width: 700px; margin-bottom: 1rem; font-size: 1.5625em; }
+.monorepo-theme h3 { margin: 2.3rem 0 .45rem; font-size: 1.25em; }
+.monorepo-theme .intro p, .monorepo-theme .doc-section p, .monorepo-theme .doc-section li { max-width: 700px; color: #c3c9d2; font-size: var(--content-font-size); line-height: 1.6; }
+.monorepo-theme .intro-actions { display: flex; flex-wrap: wrap; gap: 1.15rem; align-items: center; margin-top: 2rem; }
+.monorepo-theme .primary-link { display: inline-block; background: var(--header); color: white; padding: .65rem 1rem; border-radius: 4px; text-decoration: none; font-weight: 700; font-size: .9rem; }
+.monorepo-theme .primary-link:hover { background: var(--header-deep); }
+.monorepo-theme .text-link { color: #a8d9da; font-weight: 700; text-underline-offset: 3px; }
+.monorepo-theme .ledger { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--paper); border: 1px solid var(--line); border-top: 3px solid var(--accent); }
+.monorepo-theme .ledger div { padding: 1rem 1.15rem; border-right: 1px solid var(--line); }
+.monorepo-theme .ledger div:last-child { border-right: 0; }
+.monorepo-theme .ledger span { display: block; color: var(--muted); font-size: .69rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.monorepo-theme .ledger strong { display: block; margin-top: .25rem; font-size: .82rem; line-height: 1.35; }
+.monorepo-theme .doc-section { scroll-margin-top: 88px; padding: 3.7rem 0 0; border-top: 1px solid var(--line); }
+.monorepo-theme .documentation pre { margin: 1.35rem 0 0; padding: 1rem 1.15rem; overflow-x: auto; background: #282c34; border-radius: 2px; color: #d5e6ff; font: .84rem/1.55 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+.monorepo-theme .documentation code { font-family: inherit; }
+.monorepo-theme .doc-section a { color: #9ab3ff; text-underline-offset: 3px; }
+.monorepo-theme .section-heading { margin-bottom: 1.8rem; }
+.monorepo-theme .project-list { border-top: 1px solid var(--line); }
+.monorepo-theme .project-card { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 1.5rem; padding: 1.8rem 0; border-bottom: 1px solid var(--line); }
+.monorepo-theme .project-index { color: var(--accent); font-size: .72rem; font-weight: 800; letter-spacing: .06em; }
+.monorepo-theme .project-type { margin-bottom: .25rem; color: var(--muted); font-size: .76rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.monorepo-theme .project-card p:not(.project-type) { max-width: 590px; margin-bottom: .85rem; color: #c3c9d2; }
+.monorepo-theme .project-card > a { align-self: start; color: #a8d9da; font-size: .85rem; font-weight: 800; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.monorepo-theme .tags { display: flex; flex-wrap: wrap; gap: .4rem; list-style: none; padding: 0; margin: 0; }
+.monorepo-theme .tags li { padding: .17rem .5rem; background: #343b47; border-radius: 99px; color: #c9d0da; font-size: .72rem; font-weight: 650; }
+.monorepo-theme .approach { padding-bottom: 4.5rem; }
+.monorepo-theme .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.monorepo-theme .principles div { padding: 1rem 1rem 0; border-top: 2px solid var(--header); }
+.monorepo-theme .principles strong { color: #a8d9da; font-size: .8rem; }
+.monorepo-theme .principles p { margin: .5rem 0 0; color: #c3c9d2; font-size: .91rem; }
+.monorepo-theme .contact-panel { padding: clamp(2rem, 5vw, 3.5rem); background: var(--accent-soft); border-left: 4px solid var(--accent); }
+.monorepo-theme .contact-panel h2 { max-width: 620px; margin-bottom: .8rem; }
+.monorepo-theme .contact-panel > p:not(.eyebrow) { max-width: 570px; color: #dfcfca; }
+.monorepo-theme .contact-panel .primary-link { margin-top: .5rem; }
+.monorepo-theme footer { max-width: 760px; margin-top: 3.5rem; color: var(--muted); font-size: .76rem; }
+.monorepo-theme :focus-visible { outline: 3px solid #e98a59; outline-offset: 3px; }
+@media (max-width: 780px) { .monorepo-theme .site-header { padding: 0 1.25rem; } .monorepo-theme .page-shell { display: block; padding: 2.5rem 1.25rem 4rem; } .monorepo-theme .sidebar { position: static; margin-bottom: 2.7rem; } .monorepo-theme .sidebar nav { border-top: 1px solid var(--line); border-left: 0; } .monorepo-theme .project-link, .monorepo-theme .nav-project .nav-link { border-left: 0; border-bottom: 2px solid transparent; margin: 0; padding: .7rem 0; } .monorepo-theme .project-items { border-left: 0; } .monorepo-theme .nav-link.active { border-bottom-color: var(--header); } .monorepo-theme .sidebar-note { display: none; } }
+@media (prefers-reduced-motion: reduce) { .monorepo-theme { scroll-behavior: auto; } }
+
+.monorepo-theme .flow-diagram { margin: 1.35rem 0; color: var(--muted); }
+.monorepo-theme .flow-diagram svg { display: block; width: 100%; height: auto; }
+.monorepo-theme .flow-connections { fill: none; stroke: currentColor; stroke-width: 2; }
+.monorepo-theme .flow-node rect { fill: var(--paper); stroke: var(--line); stroke-width: 2; }
+.monorepo-theme .flow-node text { fill: var(--ink); text-anchor: middle; font: 15px var(--sans); }
+.monorepo-theme .flow-node tspan { fill: var(--muted); }
+.monorepo-theme .flow-diagram figcaption { margin-top: .5rem; font-size: var(--content-font-size); }

@@ -89,9 +89,6 @@ export class ManagedPageComponent {
     return this.store.headerMenus().find((m) => m.published && m.slug === slug);
   }
   paths() {
-    return this.store
-      .headerMenus()
-      .filter((m) => m.published)
-      .map((m) => "/" + m.slug);
+    return this.store.contentPaths();
   }
 }

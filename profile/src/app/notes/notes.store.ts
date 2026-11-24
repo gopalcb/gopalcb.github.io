@@ -8,13 +8,26 @@ import {
 } from "../site/site-models";
 import { MarkdownStyle, stylingError } from "./markdown-styling";
 import { Injectable, signal } from "@angular/core";
+import { MESH_PATH, MESH_PROJECT_ID, RAG_TOPIC_ID, ragAreaForTopic, ragAreaForUrl } from "../rag/rag-area";
 export interface ReadingStyle {
   font: string;
   size: number;
   ink: string;
   background: string;
 }
+export interface ReaderMetadata {
+  showPath: boolean;
+  showType: boolean;
+  showReadingTime: boolean;
+  showUpdated: boolean;
+}
+export const DEFAULT_READER_METADATA: Readonly<ReaderMetadata> = {
+  showPath: true, showType: true, showReadingTime: true, showUpdated: true,
+};
 export interface Note {
+  readerMetadata?: ReaderMetadata;
+  routeName?: string;
+  routeAliases?: string[];
   project?: string | null;
   contentPath?: string;
   aliases?: string[];
@@ -28,6 +41,13 @@ export interface Note {
   published: boolean;
   updated: string;
   style?: ReadingStyle;
+}
+export const NOTE_ROUTE_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+export function noteRouteTokens(note: Note): string[] {
+  return [...new Set([note.routeName || note.id, note.id, ...(note.aliases || []), ...(note.routeAliases || [])])];
+}
+export function sameNoteRouteScope(a: Pick<Note, "topic" | "project">, b: Pick<Note, "topic" | "project">): boolean {
+  return a.topic === b.topic && (!ragAreaForTopic(a.topic) || (a.project || null) === (b.project || null));
 }
 export interface SiteTheme extends ReadingStyle {
   canvas: string;
@@ -43,6 +63,7 @@ export interface Topic {
   tags: string;
 }
 export const FONTS = [
+  { value: "roboto", label: "Roboto" },
   { value: "source", label: "Source Sans 3" },
   { value: "system", label: "System sans" },
   { value: "mono", label: "Roboto Mono" },
@@ -50,6 +71,7 @@ export const FONTS = [
   { value: "patrick", label: "Patrick Hand · handwritten" },
 ];
 export const FONT_CSS: Record<string, string> = {
+  roboto: '"RAG Roboto", Roboto, Arial, sans-serif',
   source: '"Source Sans 3", sans-serif',
   system: "system-ui, sans-serif",
   mono: '"Roboto Mono", monospace',
@@ -57,14 +79,18 @@ export const FONT_CSS: Record<string, string> = {
   patrick: '"Patrick Hand", cursive',
 };
 export const DEFAULT_THEME: SiteTheme = {
-  font: "source",
-  size: 16,
-  ink: "#202936",
-  background: "#ffffff",
-  canvas: "#f5f7f6",
-  accent: "#167b70",
+  font: "roboto",
+  size: 15,
+  ink: "#e1e5ec",
+  background: "#1e2129",
+  canvas: "#1e2129",
+  accent: "#6ee7d2",
   name: "Gopal",
 };
+export function topicRouteConflict(id: string, menus: HeaderMenu[]) {
+  return ["home", "notes", "admin", "api", "secure", "p", "projects-and-nodex"].includes(id) ||
+    (!ragAreaForTopic(id) && menus.some(menu => menu.slug === id));
+}
 export function validStyle(value: unknown): value is ReadingStyle {
   const v = value as ReadingStyle;
   return (
@@ -124,6 +150,10 @@ export function validWorkspace(value: unknown): value is Workspace {
     data.notes.every(
       (n) =>
         n &&
+        (n.readerMetadata === undefined || (n.readerMetadata !== null &&
+          Object.keys(DEFAULT_READER_METADATA).every(key => typeof n.readerMetadata![key as keyof ReaderMetadata] === "boolean"))) &&
+        (n.routeName === undefined || (typeof n.routeName === "string" && n.routeName.length <= 100 && NOTE_ROUTE_PATTERN.test(n.routeName))) &&
+        (n.routeAliases === undefined || (Array.isArray(n.routeAliases) && n.routeAliases.every(route => typeof route === "string" && route.length <= 100 && NOTE_ROUTE_PATTERN.test(route)))) &&
         typeof n.id === "string" &&
         data.topics.some((t) => t.id === n.topic) &&
         ["title", "summary", "content", "updated"].every(
@@ -143,6 +173,38 @@ export function validWorkspace(value: unknown): value is Workspace {
 }
 @Injectable({ providedIn: "root" })
 export class NotesStore {
+  topicPath(topic: string) {
+    return ragAreaForTopic(topic)?.path || "/" + encodeURIComponent(topic);
+  }
+  notePath(note: Note) {
+    const route = encodeURIComponent(note.routeName || note.id);
+    const area = ragAreaForTopic(note.topic);
+    if (area) {
+      const project = this.projects().find(p => p.topic === note.topic && p.title === note.project);
+      return project ? `${area.path}/${encodeURIComponent(project.id)}/${route}` : area.path;
+    }
+    return this.topicPath(note.topic) + "/" + route;
+  }
+  resolveNoteRoute(topic: string, route: string, project?: string) {
+    return this.notes().find(note => note.published && note.topic === topic &&
+      (!ragAreaForTopic(topic) || note.project === project) && noteRouteTokens(note).includes(route));
+  }
+  contentPaths() {
+    const paths = [
+      ...this.headerMenus().filter(m => m.published).map(m => "/" + m.slug),
+      ...this.topics().map(t => this.topicPath(t.id)),
+      ...this.projects().filter(p => ragAreaForTopic(p.topic)).map(p => `${this.topicPath(p.topic)}/${encodeURIComponent(p.id)}`),
+      ...this.notes().filter(n => n.published).flatMap(note => {
+        const canonical = this.notePath(note);
+        const prefix = canonical.slice(0, canonical.lastIndexOf("/") + 1);
+        return noteRouteTokens(note).map(route => prefix + encodeURIComponent(route));
+      }),
+    ];
+    return paths.flatMap(path => {
+      const area = ragAreaForUrl(path);
+      return [path, ...(area?.legacyPaths.map(legacy => legacy + path.slice(area.path.length)) || [])];
+    });
+  }
   readonly projects = signal<Project[]>([]);
   readonly readerLayout = signal<ReaderLayout>({
     ...SITE_DEFAULTS.readerLayout,
@@ -159,7 +221,15 @@ export class NotesStore {
     );
     return menu ? "/" + menu.slug : "/notes";
   }
+  get meshProjectPath() {
+    const published = this.headerMenus().some(menu =>
+      menu.id === MESH_PROJECT_ID && menu.slug === MESH_PATH.slice(1) && menu.published);
+    const project = this.projects().find(item => item.id === MESH_PROJECT_ID && item.topic === MESH_PROJECT_ID);
+    return published && project ? `${MESH_PATH}/${project.id}` : undefined;
+  }
   get homePath() {
+    const meshProject = this.meshProjectPath;
+    if (meshProject) return meshProject;
     const menu =
       this.headerMenus().find((m) => m.published && m.id === "home") ||
       this.headerMenus().find((m) => m.published);
@@ -207,7 +277,9 @@ export class NotesStore {
     );
     this.markdownStyles.set(data.markdownStyles || []);
     this.activeMarkdownStyle.set(data.activeMarkdownStyle || null);
-    this.notes.set(data.notes);
+    this.notes.set(data.notes.map(note => ({
+      ...note, readerMetadata: { ...DEFAULT_READER_METADATA, ...note.readerMetadata },
+    })));
     this.topics.set(data.topics);
     this.theme.set(data.theme);
     this.revision = revision;

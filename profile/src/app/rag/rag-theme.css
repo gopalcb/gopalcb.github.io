@@ -1,0 +1,362 @@
+@import "./rag-reference.css";
+
+@font-face {
+  font-family: "RAG Roboto";
+  src: url("/fonts/rag-roboto/Roboto.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* Shared documentation identity; reference tokens and shared controls stay canonical. */
+.notes-shell.monorepo-theme {
+  --sans: "RAG Roboto", Roboto, Arial, sans-serif;
+  --monorepo-header-height: 48px;
+  --monorepo-header-background: #0047ab;
+  --monorepo-highlight: #6395ee;
+  --monorepo-brand-color: #00fff0;
+  --monorepo-project-letter-spacing: 1px;
+  --monorepo-h4-size-increase: 0.5px;
+  --monorepo-h5-font-size: 14px;
+  --rag-layout-max-width: 1720px;
+  --rag-layout-gutter: clamp(32px, 5vw, 80px);
+  --wo-page: var(--page);
+  --wo-ink: var(--ink);
+  --wo-muted: var(--muted);
+  --wo-primary: #6ee7d2;
+  --wo-primary-hover: var(--header-deep);
+  --wo-border: var(--line);
+  --notes-surface: var(--paper);
+  --notes-rule: var(--line);
+  --notes-muted: var(--muted);
+  --notes-code: #282c34;
+  --notes-thumb: var(--line);
+  --notes-track: var(--page);
+  --rag-link: #9ab3ff;
+  --rag-copy: #c3c9d2;
+  --rag-danger: #ffb4a8;
+  --rag-code-ink: #d5e6ff;
+  --wo-option-selected: var(--paper);
+  --wo-navigation-marker: var(--wo-primary);
+  min-height: 100vh;
+  padding-top: var(--monorepo-header-height);
+  color-scheme: dark;
+  color: var(--ink);
+  background: var(--page);
+  font: 13px/1.6 var(--sans);
+}
+.notes-shell.monorepo-theme .notes-navigation {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 30;
+  height: var(--monorepo-header-height);
+  min-height: var(--monorepo-header-height);
+  max-height: var(--monorepo-header-height);
+  max-width: none;
+  gap: 24px;
+  padding: 0 7vw;
+  background: var(--monorepo-header-background);
+  color: var(--ink);
+  box-shadow: 0 2px 9px rgb(0 0 0 / 42%);
+}
+.notes-shell.monorepo-theme .notes-navigation::after { display: none; }
+.notes-shell.monorepo-theme:is(.rag-area, .mesh-navigation) .notes-navigation {
+  padding-inline: max(var(--rag-layout-gutter), calc((100% - var(--rag-layout-max-width)) / 2 + var(--rag-layout-gutter)));
+}
+.notes-shell.monorepo-theme:is(.rag-area, .mesh-navigation) .account-trigger { padding-inline: 0; }
+.notes-shell.monorepo-theme .rag-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--monorepo-brand-color);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.notes-shell.monorepo-theme .rag-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  color: inherit;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.notes-shell.monorepo-theme .rag-github:is(:hover, :focus-visible) { color: var(--wo-primary); }
+.github-mark {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  background: currentColor;
+  mask: url("../../../public/github-mark.svg") center / contain no-repeat;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .notes-shell.mesh-navigation main > router-outlet + * {
+    animation: workspace-page-in 220ms ease-out;
+  }
+}
+
+@keyframes workspace-page-in {
+  from { opacity: .45; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.notes-shell.monorepo-theme .account { margin-left: 0; }
+.notes-shell.monorepo-theme .avatar { background: transparent; color: var(--ink); border-color: var(--muted); }
+.notes-shell.monorepo-theme .account-popup,
+.notes-shell.monorepo-theme .account-popup a,
+.notes-shell.monorepo-theme .global-feedback p,
+.notes-shell.monorepo-theme .confirm-dialog {
+  color: var(--ink);
+  background: var(--paper);
+  border-color: var(--line);
+}
+.notes-shell.monorepo-theme .account-popup a:hover { background: var(--page); }
+.notes-shell.monorepo-theme .account-popup { top: calc(100% + 8px); }
+.notes-shell.monorepo-theme .skip-link { background: var(--paper); color: var(--ink); }
+.notes-shell.monorepo-theme .rag-layout {
+  --rag-layout-padding-top: 56px;
+  --rag-layout-padding-bottom: 80px;
+  display: grid;
+  gap: 32px;
+  width: 100%;
+  max-width: var(--rag-layout-max-width);
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: var(--rag-layout-padding-top) var(--rag-layout-gutter) var(--rag-layout-padding-bottom);
+}
+.notes-shell.monorepo-theme .rag-sidebar { color: var(--muted); }
+.notes-shell.monorepo-theme .rag-project + .rag-project { margin-top: 24px; }
+.notes-shell.monorepo-theme .rag-project h2 { margin: 0; }
+.notes-shell.monorepo-theme .rag-project-link {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding-bottom: 12px;
+  color: var(--ink);
+  font: 700 13px/1.25 var(--sans);
+  overflow-wrap: anywhere;
+}
+.notes-shell.monorepo-theme .rag-project-items { border-left: 1px solid var(--line); }
+.notes-shell.monorepo-theme .rag-nav-link {
+  position: relative;
+  display: block;
+  padding: 8px 0 8px 16px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.notes-shell.monorepo-theme :is(.rag-project-link, .rag-nav-link):is(:hover, :focus-visible) { color: var(--monorepo-highlight); }
+.notes-shell.monorepo-theme .rag-project.project-active .rag-project-link,
+.notes-shell.monorepo-theme .rag-nav-link.active { color: var(--monorepo-highlight); }
+.notes-shell.monorepo-theme .rag-nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: currentColor;
+}
+.notes-shell.monorepo-theme .rag-content { min-width: 0; width: 100%; max-width: 760px; justify-self: end; }
+.notes-shell.monorepo-theme .rag-content .reading-meta { font-size: 11px; }
+.notes-shell.monorepo-theme .prose.rag-article,
+.notes-shell.monorepo-theme .prose.reader-article,
+.notes-shell.monorepo-theme .prose.editor-preview {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: var(--rag-copy);
+  background: transparent;
+  font: var(--content-font-size)/1.6 var(--sans);
+}
+.notes-shell.monorepo-theme .prose :is(h1,h2,h3,h4,h5,h6) {
+  font-family: var(--sans);
+  color: var(--monorepo-highlight);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: .015em;
+  text-transform: uppercase;
+}
+.notes-shell.monorepo-theme .prose h1 { margin: 0 0 24px; font-size: 2em; }
+.notes-shell.monorepo-theme .prose h2 { margin: 32px 0 16px; font-size: 1.5625em; }
+.notes-shell.monorepo-theme .prose h3 { margin: 32px 0 8px; font-size: 1.25em; }
+.notes-shell.monorepo-theme .prose h4 { margin-bottom: 0; font-size: calc(1em + var(--monorepo-h4-size-increase)); }
+.notes-shell.monorepo-theme .prose h5 { font-size: var(--monorepo-h5-font-size); }
+.notes-shell.monorepo-theme .prose :is(h4,h5,h6) { margin-top: 30px; }
+.notes-shell.monorepo-theme .prose :is(h4,h5,h6):not(:has(+ hr)) { margin-bottom: 11px; }
+.notes-shell.monorepo-theme .prose hr { margin-bottom: 15px; }
+.notes-shell.monorepo-theme .prose.rag-article > :first-child { margin-top: 0; }
+.notes-shell.monorepo-theme :is(.home-article-title, .about-me-profile h1, .rag-intro h1) { color: var(--monorepo-highlight); text-transform: uppercase; }
+.notes-shell.monorepo-theme .prose :is(p,li) { line-height: 1.6; }
+.notes-shell.monorepo-theme .prose section + section { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--line); }
+.notes-shell.monorepo-theme .prose a { color: var(--rag-link); text-underline-offset: 3px; }
+.notes-shell.monorepo-theme .prose pre { background: var(--notes-code); color: var(--rag-code-ink); padding: 16px; border-radius: 2px; }
+.notes-shell.monorepo-theme .prose code { font-family: "Roboto Mono", ui-monospace, monospace; }
+.notes-shell.monorepo-theme .prose code:not(pre code) {
+  color: var(--monorepo-highlight);
+  background: color-mix(in srgb, var(--monorepo-highlight) 6%, var(--notes-code));
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 0 4px;
+  text-transform: none;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.notes-shell.monorepo-theme .prose figure { margin: 24px 0; }
+.notes-shell.monorepo-theme .prose figcaption { color: var(--muted); font-size: var(--content-font-size); }
+.notes-shell.monorepo-theme .prose img { max-width: 100%; height: auto; }
+.notes-shell.monorepo-theme .admin { max-width: 1440px; padding-top: 32px; }
+.notes-shell.monorepo-theme .admin h1 { font-size: 24px; margin-bottom: 16px; }
+.notes-shell.monorepo-theme :is(.admin-note-list, .admin-note-row, .editor-settings, .topic-form, .undo) { background: var(--paper); border-color: var(--line); }
+.notes-shell.monorepo-theme :is(input, textarea, .tm-select-trigger, .tm-select-menu, .tm-select-option) {
+  color: var(--ink);
+  background: var(--page);
+  border-color: var(--line);
+}
+.notes-shell.monorepo-theme :is(.tm-select-option:hover, .tm-select-option.active, .tm-select-option[aria-selected="true"]) { color: var(--wo-primary); background: var(--paper); }
+.notes-shell.monorepo-theme textarea { resize: none; }
+.notes-shell.monorepo-theme :is(button[woButton], a[woButton], .file-action) { color: var(--ink); background: var(--paper); border-color: var(--line); }
+.notes-shell.monorepo-theme :is(button[woButton], a[woButton]).primary { color: var(--ink); background: var(--header); border-color: var(--header); }
+.notes-shell.monorepo-theme :is(button[woButton], a[woButton]):hover:enabled { background: var(--header-deep); }
+.notes-shell.monorepo-theme .danger-text { color: var(--rag-danger); }
+.notes-shell.monorepo-theme .error { color: var(--rag-danger); background: var(--paper); border-color: var(--rag-danger); }
+.notes-shell.monorepo-theme .pill { color: var(--wo-primary); background: var(--paper); border-color: var(--line); }
+.notes-shell.monorepo-theme .draft-pill { color: var(--muted); }
+.notes-shell.monorepo-theme .empty h1 { font-size: 24px; }
+.notes-shell.monorepo-theme :focus-visible { outline-color: var(--wo-primary); }
+@media (max-width: 780px) {
+  .notes-shell.monorepo-theme.rag-area { --rag-layout-gutter: 20px; }
+  .notes-shell.monorepo-theme .notes-navigation { padding-inline: 16px; gap: 12px; }
+  .monorepo-theme .rag-brand { font-size: 11px; }
+  .monorepo-theme .rag-layout { display: block; padding: 32px var(--rag-layout-gutter) 64px; }
+  .monorepo-theme .rag-sidebar { position: static; margin-bottom: 32px; }
+  .monorepo-theme .rag-content { max-width: none; }
+}
+
+.notes-shell.monorepo-theme input[woTextInput] { background: var(--page); color: var(--ink); border-color: var(--line); }
+.notes-shell.monorepo-theme button.tm-select-trigger:hover:enabled { background: var(--paper); color: var(--ink); border-color: var(--wo-primary); }
+.notes-shell.monorepo-theme button[woButton].danger-text { color: var(--rag-danger); }
+.notes-shell.monorepo-theme .rag-article + .rag-article { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--line); }
+
+/* The same documentation shell now covers ordinary readers and admin pages. */
+.notes-shell.monorepo-theme .notes-navigation .wo-header-nav {
+  flex: 1;
+  min-width: 0;
+  flex-wrap: nowrap;
+  gap: 16px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+}
+.notes-shell.monorepo-theme .notes-navigation .wo-header-nav a {
+  flex-shrink: 0;
+  min-height: 28px;
+  font: 11px/1.4 var(--sans);
+  color: var(--ink);
+  letter-spacing: normal;
+  text-transform: none;
+}
+.notes-shell.monorepo-theme .notes-navigation .wo-header-nav a:is(.active, [aria-current="page"], :hover) { color: var(--wo-primary); }
+.notes-shell.monorepo-theme .notes-navigation .wo-header-nav a::after { background: var(--wo-primary); }
+.notes-shell.monorepo-theme .notes-navigation .featured-nav { gap: 32px; }
+.notes-shell.monorepo-theme .notes-navigation .featured-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  inline-size: 12em;
+  font: 500 12px/1.4 var(--sans);
+}
+.featured-nav a::after { content: none; }
+.notes-shell.monorepo-theme .notes-navigation .featured-nav a[aria-current="page"] {
+  color: var(--monorepo-brand-color);
+  text-shadow: 0 0 10px color-mix(in srgb, currentColor 45%, transparent);
+}
+.featured-nav a[aria-current="page"] wo-icon {
+  filter: drop-shadow(0 0 4px color-mix(in srgb, currentColor 45%, transparent));
+}
+.notes-shell.monorepo-theme :is(.rag-sidebar, .topic-rail, .styling-controls, .theme-controls, .component-palette) {
+  position: sticky;
+  top: calc(var(--monorepo-header-height) + 32px);
+  align-self: start;
+  min-width: 0;
+  max-height: calc(100dvh - var(--monorepo-header-height) - 48px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+.notes-shell.monorepo-theme .rag-sidebar {
+  top: calc(var(--monorepo-header-height) + var(--rag-layout-padding-top));
+  /* Keep the rail within the grid's content box at the end of the page. */
+  max-height: calc(100dvh - var(--monorepo-header-height) - var(--rag-layout-padding-top) - var(--rag-layout-padding-bottom));
+}
+.notes-shell.monorepo-theme .reader-layout {
+  gap: 32px;
+  max-width: 1720px;
+  padding: 56px clamp(32px, 5vw, 80px) 80px;
+}
+.notes-shell.monorepo-theme .topic-rail { border-right: 0; padding-right: 0; }
+.notes-shell.monorepo-theme .rail-topic { color: var(--ink); }
+.notes-shell.monorepo-theme .project-title { font: 700 13px/1.25 var(--sans); color: var(--ink); }
+.notes-shell.monorepo-theme :is(.rag-project-link, .project-title) { letter-spacing: var(--monorepo-project-letter-spacing); }
+.notes-shell.monorepo-theme .rail-note { font: 14px/1.5 var(--sans); color: var(--muted); border-color: var(--line); }
+.notes-shell.monorepo-theme .rail-note:is(:hover, .selected) { color: var(--monorepo-highlight); background: transparent; border-left-color: var(--wo-primary); }
+.notes-shell.monorepo-theme .rail-note.selected { color: var(--monorepo-highlight); border-left-color: var(--monorepo-highlight); }
+.notes-shell.monorepo-theme .project-folder.project-active .project-title { color: var(--monorepo-highlight); }
+.notes-shell.monorepo-theme :is(.eyebrow, .sidebar-label) { color: var(--accent); }
+.notes-shell.monorepo-theme .reading-pane { max-width: 760px; width: 100%; justify-self: end; }
+.notes-shell.monorepo-theme .prose blockquote { background: var(--paper); color: var(--muted); border-color: var(--line); }
+.notes-shell.monorepo-theme .prose :is(th,td) { border-color: var(--line); }
+.notes-shell.monorepo-theme .rag-article table.memory-mesh-design-decisions {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+.notes-shell.monorepo-theme .rag-article table.memory-mesh-design-decisions :is(th,td) { overflow-wrap: anywhere; }
+.notes-shell.monorepo-theme .rag-article table.memory-mesh-design-decisions :is(th,td):first-child { width: 22%; }
+.notes-shell.monorepo-theme .rag-article table.memory-mesh-design-decisions :is(th,td):nth-child(n+2) { width: 26%; }
+
+@media (width > 780px) {
+  .notes-shell.monorepo-theme .rag-article[data-table-layout="embedding"] > table:first-of-type {
+    display: table;
+    width: calc(100% + 18px);
+  }
+  .notes-shell.monorepo-theme :is(
+    .rag-article[data-table-layout="embedding"] > table:nth-of-type(2),
+    .rag-article[data-table-layout="collaboration"] > table,
+    .rag-article[data-table-layout="sandboxing"] > table
+  ) {
+    display: table;
+    table-layout: fixed;
+    overflow-wrap: anywhere;
+  }
+  .notes-shell.monorepo-theme .rag-article[data-table-layout="embedding"] > table:nth-of-type(2) th:nth-child(1) { width: 26%; }
+  .notes-shell.monorepo-theme .rag-article[data-table-layout="embedding"] > table:nth-of-type(2) th:nth-child(2) { width: 13%; }
+  .notes-shell.monorepo-theme .rag-article[data-table-layout="embedding"] > table:nth-of-type(2) th:nth-child(3) { width: 11%; }
+  .notes-shell.monorepo-theme .rag-article[data-table-layout="embedding"] > table:nth-of-type(2) th:nth-child(4) { width: 20%; }
+  .notes-shell.monorepo-theme .rag-article[data-table-layout="collaboration"] > table th:first-child { width: 17%; }
+  .notes-shell.monorepo-theme .rag-article[data-table-layout="sandboxing"] > table th:first-child { width: 18.3%; }
+  .notes-shell.monorepo-theme .rag-article[data-table-layout="sandboxing"] > table th:nth-child(2) { width: 47%; }
+}
+.notes-shell.monorepo-theme :is(.prose hr, .about-me-separator) { border-color: var(--line); }
+.notes-shell.monorepo-theme :is(.theme-controls, .layout-settings, .component-palette, .placed-component) { color: var(--ink); background: var(--paper); border-color: var(--line); }
+.notes-shell.monorepo-theme .palette-item:hover:enabled { color: var(--wo-primary); background: var(--paper); border-color: var(--wo-primary); }
+.notes-shell.monorepo-theme .css-error { color: var(--rag-danger); }
+.notes-shell.monorepo-theme .theme-grid { overflow: visible; }
+.notes-shell.monorepo-theme :is(.source-editor, .css-editor) { color: var(--rag-code-ink); background: var(--notes-code); border-color: var(--line); }
+.notes-shell.monorepo-theme .source-editor { tab-size: 4; }
+.notes-shell.monorepo-theme .admin-tabs { flex-wrap: wrap; gap: 16px; }
+.notes-shell.monorepo-theme .admin-tabs button { color: var(--muted); }
+.notes-shell.monorepo-theme .admin-tabs button:is(.selected,:hover) { color: var(--wo-primary); background: transparent; }
+.notes-shell.monorepo-theme .admin-tabs button.selected::after { background: var(--wo-primary); }
+.notes-shell.monorepo-theme :is(.presets button, .recent-notes-row [woButton][aria-pressed="true"]) { color: var(--wo-primary); background: var(--paper); border-color: var(--line); }
+.notes-shell.monorepo-theme :is(.topic-order-help, .project-empty, .home-article-meta, .library-footer) { color: var(--muted); }
+.notes-shell.monorepo-theme :is(.topic-drop-target, .page-block.selected) { background: var(--paper); outline-color: var(--wo-primary); }
+@media (max-width: 780px) {
+  .notes-shell.monorepo-theme :is(.rag-sidebar, .topic-rail, .styling-controls, .theme-controls, .component-palette) { position: static; max-height: none; overflow: visible; }
+  .notes-shell.monorepo-theme .reader-layout { display: block; padding: 32px 20px 64px; }
+  .notes-shell.monorepo-theme .topic-rail { margin-bottom: 32px; }
+  .notes-shell.monorepo-theme .notes-navigation { gap: 12px; }
+  .notes-shell.monorepo-theme .rag-brand { font-size: 11px; }
+}

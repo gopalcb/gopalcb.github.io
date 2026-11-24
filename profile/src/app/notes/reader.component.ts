@@ -41,15 +41,17 @@ import { IconComponent } from "../components/icon/icon.component";
         <p class="eyebrow">PROJECTS</p>
         @if (selectedTopic(); as topic) {
             @for (project of projects(topic.id); track project) {
-              <section class="project-folder" [attr.aria-label]="project">
+              <section class="project-folder" [class.project-active]="project === note()?.project" [attr.aria-label]="project">
                 <h2 class="project-title"><wo-icon name="projects" /> {{ project }}</h2>
                 @for (doc of projectDocs(topic.id, project); track doc.id) {
                   @if (pdfAsset(doc); as pdf) {
-                    <a class="rail-note" [href]="noteAssetUrl(doc.id, pdf.name)" target="_blank" rel="noopener noreferrer">{{ doc.title }}</a>
+                    <a class="rail-note" [class.selected]="doc.id === note()?.id"
+                      [attr.aria-current]="doc.id === note()?.id ? 'page' : null"
+                      [href]="noteAssetUrl(doc.id, pdf.name)" target="_blank" rel="noopener noreferrer">{{ doc.title }}</a>
                   } @else {
                   <a class="rail-note" [class.selected]="doc.id === note()?.id"
                     [attr.aria-current]="doc.id === note()?.id ? 'page' : null"
-                    [routerLink]="['/notes', doc.id]">{{ doc.title }}</a>
+                    [routerLink]="store.notePath(doc)">{{ doc.title }}</a>
                   }
                 } @empty {
                   <p class="project-empty">No published documents yet.</p>
@@ -68,7 +70,7 @@ import { IconComponent } from "../components/icon/icon.component";
                 class="rail-note"
                 [class.selected]="item.id === note()?.id"
                 [attr.aria-current]="item.id === note()?.id ? 'page' : null"
-                [routerLink]="['/notes', item.id]"
+                [routerLink]="store.notePath(item)"
                 >{{ position + 1 }}. {{ noteLabel(item.title) }}</a
               >
           }
@@ -77,16 +79,26 @@ import { IconComponent } from "../components/icon/icon.component";
     </aside>
     @if (note(); as n) {
       <div class="reading-pane">
+        @if (n.readerMetadata?.showPath !== false) {
         <div class="breadcrumb">
           notes <span>/</span> {{ topicTitle(n.topic) }}
           @if (n.project) { <span>/</span> {{ n.project }} }
         </div>
+        }
+        @if (n.readerMetadata?.showType !== false || n.readerMetadata?.showReadingTime !== false || n.readerMetadata?.showUpdated !== false) {
         <div class="reading-meta">
-          <span class="pill">{{ n.project ? "PROJECT DOCUMENT" : "LEARNING NOTE" }}</span
-          ><span
-            >{{ minutes(n.content) }} min read · Updated <time [attr.datetime]="n.updated">{{ n.updated }}</time></span
-          >
+          @if (n.readerMetadata?.showType !== false) {
+            <span class="pill">{{ n.project ? "PROJECT DOCUMENT" : "LEARNING NOTE" }}</span>
+          }
+          @if (n.readerMetadata?.showReadingTime !== false || n.readerMetadata?.showUpdated !== false) {
+            <span>
+              @if (n.readerMetadata?.showReadingTime !== false) { {{ minutes(n.content) }} min read }
+              @if (n.readerMetadata?.showReadingTime !== false && n.readerMetadata?.showUpdated !== false) { · }
+              @if (n.readerMetadata?.showUpdated !== false) { Updated <time [attr.datetime]="n.updated">{{ n.updated }}</time> }
+            </span>
+          }
         </div>
+        }
         <article
           class="prose reader-article"
           [style.font-family]="fonts[(n.style || store.theme()).font]"
@@ -100,7 +112,7 @@ import { IconComponent } from "../components/icon/icon.component";
     } @else {
       <div class="empty">
         <h1>
-          {{ selectedTopic() ? "No published notes yet" : "Note unavailable" }}
+          {{ selectedTopic() && !params()?.get('id') ? "No published notes yet" : "Note unavailable" }}
         </h1>
         <p>This note is unpublished or could not be found.</p>
         <a [routerLink]="store.notesPath">Explore the notes →</a>
@@ -119,20 +131,13 @@ export class ReaderComponent {
   note() {
     const params = this.params();
     const topic = params?.get("topic");
-
-    if (topic) {
-      for (const project of this.store.projects().filter(p => p.topic === topic)) {
-        const document = this.projectDocs(topic, project.title)[0];
-        if (document) return document;
-      }
-
-      return this.topicNotes(topic)[0];
-    }
-
     const id = params?.get("id") || "";
-    return this.store.notes().find(
-      n => n.published && (n.id === id || n.aliases?.includes(id)),
-    );
+    if (id) {
+      return topic ? this.store.resolveNoteRoute(topic, id) : this.store.notes().find(
+        n => n.published && (n.id === id || n.aliases?.includes(id)),
+      );
+    }
+    return topic ? this.topicNotes(topic)[0] : undefined;
   }
   selectedTopic() {
     return this.store

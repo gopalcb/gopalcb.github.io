@@ -24,6 +24,11 @@ export class PageViewsService {
   start(): void {
     const win = this.document.defaultView;
     if (this.started || !win || win.top !== win.self) return;
+    const hostname = win.location.hostname.toLowerCase().replace(/\.$/, "");
+    // Local authoring must not create visits, session IDs or collector requests.
+    if (hostname === "localhost" || hostname.endsWith(".localhost") ||
+      /^127(?:\.\d{1,3}){3}$/.test(hostname) ||
+      hostname === "[::1]" || hostname === "::1" || hostname === "0.0.0.0") return;
     this.started = true;
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd),

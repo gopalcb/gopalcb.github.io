@@ -34,7 +34,22 @@ export function frameDocument(
   components: PageComponent[],
   grid: boolean,
   token: string,
+  palette: Record<string, string> = {},
 ): string {
+  // Only named, computed hex colors cross into the isolated document as CSS values.
+  const colors = ["page", "paper", "ink", "muted", "line", "accent"].filter(
+    name => /^#[0-9a-f]{6}$/i.test(palette[name] || ""),
+  );
+  const variables = colors.map(name => `--${name}:${palette[name]}`).join(";");
+  const gridSurface = grid && colors.length === 6
+    ? ";background:var(--page);color-scheme:light dark"
+    : "";
+  const gridCardTheme = gridSurface
+    ? ".card{box-shadow:none}.card:hover{background:color-mix(in srgb,var(--paper) 94%,var(--accent))}.symbol{background:color-mix(in srgb,var(--paper) 90%,var(--accent))}"
+    : "";
+  const cardTheme = colors.length === 6
+    ? ".card{background:var(--paper);color:var(--ink);border-color:var(--line);font-family:Roboto,Arial,sans-serif}.card:hover{border-color:var(--accent)}.card:focus-visible{outline-color:var(--accent)}.symbol{background:var(--page);color:var(--accent);border-color:var(--line)}.card :is(p,small){color:var(--muted)}.card footer{color:var(--accent)}"
+    : "";
   const data = blocks
     .map((block) => {
       const component = components.find((c) => c.id === block.componentId);
@@ -62,14 +77,14 @@ export function frameDocument(
         : null;
     })
     .filter(Boolean);
-  const encoded = JSON.stringify({ data, grid, token })
+  const encoded = JSON.stringify({ data, grid, token, cardTheme: cardTheme + gridCardTheme })
     .replace(/</g, "\\u003c")
     .replace(/\u2028/g, "\\u2028")
     .replace(/\u2029/g, "\\u2029");
-  return `<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-${token}' 'unsafe-eval'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; font-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'"><style>body{margin:0;color:#202936;font:13px/1.6 system-ui}#canvas{display:grid;gap:16px;padding:4px}#canvas.grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr}#canvas.grid>section{min-width:0}@media(max-width:760px){#canvas.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:500px){#canvas.grid{grid-template-columns:minmax(0,1fr)}}.error{color:#932d24;font-size:12px;padding:8px}</style></head><body><div id="canvas"></div><script nonce="${token}" type="application/json" id="page-data">${encoded}</script><script nonce="${token}">
+  return `<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-${token}' 'unsafe-eval'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; font-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'"><style>html{${variables}${gridSurface}}body{margin:0;color:var(--ink,#202936);font:13px/1.6 Roboto,Arial,sans-serif}#canvas{display:grid;gap:16px;padding:4px}#canvas.grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr}#canvas.grid>section{min-width:0}@media(max-width:760px){#canvas.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:500px){#canvas.grid{grid-template-columns:minmax(0,1fr)}}.error{color:#ffb4a8;font-size:12px;padding:8px}</style></head><body><div id="canvas"></div><script nonce="${token}" type="application/json" id="page-data">${encoded}</script><script nonce="${token}">
   (()=>{const config=JSON.parse(document.getElementById('page-data').textContent),canvas=document.getElementById('canvas');canvas.className=config.grid?'grid':'';
   const notify=()=>parent.postMessage({channel:'site-page',token:config.token,height:Math.min(8000,Math.max(80,Math.ceil(canvas.getBoundingClientRect().height)+8))},'*');
-  for(const item of config.data){const host=document.createElement('section');canvas.append(host);const root=host.attachShadow({mode:'open'}),style=document.createElement('style');style.textContent=item.css+(config.grid?':host{display:flex!important;min-width:0} :host>div{display:flex;flex:1;min-width:0} :host>div>*{flex:1;min-width:0;overflow-wrap:anywhere}':'');root.append(style);const content=document.createElement('div');content.innerHTML=item.html;root.append(content);
+  for(const item of config.data){const host=document.createElement('section');canvas.append(host);const root=host.attachShadow({mode:'open'}),style=document.createElement('style');style.textContent=item.css+(config.grid?':host{display:flex!important;min-width:0} :host>div{display:flex;flex:1;min-width:0} :host>div>*{flex:1;min-width:0;overflow-wrap:anywhere}':'')+config.cardTheme;root.append(style);const content=document.createElement('div');content.innerHTML=item.html;root.append(content);
   try{if(item.js.trim())new Function('root',item.js)(root);}catch(error){const notice=document.createElement('p');notice.className='error';notice.textContent='Component script error: '+error.message;root.append(notice);}}
   document.addEventListener('click',event=>{const anchor=event.composedPath().find(node=>node.tagName==='A');if(anchor){event.preventDefault();parent.postMessage({channel:'site-page',token:config.token,href:anchor.getAttribute('href')},'*');}});
   if(typeof ResizeObserver!=='undefined')new ResizeObserver(notify).observe(canvas);notify();})();
@@ -104,7 +119,16 @@ export class SiteFrameComponent implements OnChanges, AfterViewInit {
   }
   private update() {
     if (!this.frame) return;
-    const signature = JSON.stringify([this.blocks, this.components, this.grid]);
+    const style = getComputedStyle(this.frame.nativeElement);
+    const palette = {
+      page: style.getPropertyValue("--page").trim(),
+      paper: style.getPropertyValue("--paper").trim(),
+      ink: style.getPropertyValue("--ink").trim(),
+      muted: style.getPropertyValue("--muted").trim(),
+      line: style.getPropertyValue("--line").trim(),
+      accent: style.getPropertyValue("--wo-primary").trim(),
+    };
+    const signature = JSON.stringify([this.blocks, this.components, this.grid, palette]);
     if (signature === this.signature) return;
     this.signature = signature;
     this.token = crypto.randomUUID();
@@ -113,6 +137,7 @@ export class SiteFrameComponent implements OnChanges, AfterViewInit {
       this.components,
       this.grid,
       this.token,
+      palette,
     );
   }
   @HostListener("window:message", ["$event"]) message(event: MessageEvent) {
