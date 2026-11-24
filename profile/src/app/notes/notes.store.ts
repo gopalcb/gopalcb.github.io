@@ -1,3 +1,4 @@
+import buildInfo from '../../../public/build-info.json';
 import { NoteAsset } from "./note-assets";
 import {
   ReaderLayout,
@@ -256,7 +257,9 @@ export class NotesStore {
   async load(): Promise<void> {
     this.busy.set(true);
     try {
-      const response = await fetch(new URL('content/workspace.json', document.baseURI), { signal: AbortSignal.timeout(15000) });
+      const snapshot = new URL('content/workspace.json', document.baseURI);
+      snapshot.searchParams.set('v', buildInfo.contentSha256);
+      const response = await fetch(snapshot, { cache: 'no-cache', signal: AbortSignal.timeout(15000) });
       if (!response.ok) throw new Error('Content unavailable');
       const data = await response.json();
       if (!validWorkspace(data)) throw new Error('Invalid content');
