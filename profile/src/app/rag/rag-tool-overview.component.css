@@ -11,9 +11,7 @@
   padding: 20px;
   border: 1px solid var(--line);
   border-radius: 4px;
-  background:
-    radial-gradient(circle, color-mix(in srgb, var(--line) 48%, transparent) 1px, transparent 1px) 0 0 / 16px 16px,
-    color-mix(in srgb, var(--page) 85%, var(--notes-code));
+  background: color-mix(in srgb, var(--page) 85%, var(--notes-code));
   --case-duration: 13s;
   --handoff-at: 6.88s;
   --reply-color: var(--flow-mint);
@@ -267,8 +265,17 @@
 .reply-wire .wire-label { color: var(--reply-color); }
 
 @media (prefers-reduced-motion: no-preference) {
-  .case-clock { animation: case-clock var(--case-duration) linear; }
-  .flow { animation: enter-case 240ms ease-out both; }
+  .case-clock {
+    animation-name: rag-overview-case-clock;
+    animation-duration: var(--case-duration);
+    animation-timing-function: linear;
+  }
+  .flow {
+    animation-name: rag-overview-enter-case;
+    animation-duration: 240ms;
+    animation-timing-function: ease-out;
+    animation-fill-mode: both;
+  }
 
   .node::after {
     position: absolute;
@@ -280,7 +287,7 @@
     opacity: 0;
     pointer-events: none;
     content: "";
-    animation-name: stage-arrival;
+    animation-name: rag-overview-stage-arrival;
     animation-duration: .8s;
     animation-delay: var(--at, 0s);
     animation-timing-function: ease-out;
@@ -290,7 +297,7 @@
   .intake { --reply-at: 4.35s; }
   .coordinator { --at: 1.12s; --reply-at: 3.48s; --stage-color: var(--flow-blue); }
   .overview:not(.skip) :is(.intake, .coordinator)::after {
-    animation-name: stage-arrival, stage-return;
+    animation-name: rag-overview-stage-arrival, rag-overview-stage-return;
     animation-delay: var(--at, 0s), var(--reply-at);
   }
 
@@ -313,7 +320,11 @@
     opacity: 0;
     transform: translate(-50%, -50%);
     content: "";
-    animation: wire-pulse var(--travel, .72s) var(--at) linear both;
+    animation-name: rag-overview-wire-pulse;
+    animation-duration: var(--travel, .72s);
+    animation-delay: var(--at);
+    animation-timing-function: linear;
+    animation-fill-mode: both;
   }
 
   .request-wire { --at: .4s; }
@@ -331,30 +342,6 @@
   .overview:focus-within :is(.case-clock, .flow),
   .overview:focus-within .node::after,
   .overview:focus-within :is(.wire, .share-branch)::before { animation-play-state: paused; }
-}
-
-@keyframes case-clock { from, to { opacity: 0; } }
-
-@keyframes enter-case {
-  from { opacity: .78; }
-  to { opacity: 1; }
-}
-
-@keyframes wire-pulse {
-  from { left: var(--from-x); top: var(--from-y); opacity: 0; }
-  12%, 85% { opacity: 1; }
-  to { left: var(--to-x); top: var(--to-y); opacity: 0; }
-}
-
-@keyframes stage-arrival {
-  from { opacity: 0; }
-  50% { opacity: 1; }
-  to { opacity: var(--settled, .23); }
-}
-
-@keyframes stage-return {
-  from, to { opacity: .23; }
-  50% { opacity: 1; }
 }
 
 @container (max-width: 480px) {

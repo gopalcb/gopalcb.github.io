@@ -360,3 +360,28 @@
   .notes-shell.monorepo-theme .notes-navigation { gap: 12px; }
   .notes-shell.monorepo-theme .rag-brand { font-size: 11px; }
 }
+
+/* Global names keep the overview keyframes reachable after component CSS optimization. */
+@keyframes rag-overview-case-clock { from, to { opacity: 0; } }
+
+@keyframes rag-overview-enter-case {
+  from { opacity: .78; }
+  to { opacity: 1; }
+}
+
+@keyframes rag-overview-wire-pulse {
+  from { left: var(--from-x); top: var(--from-y); opacity: 0; }
+  12%, 85% { opacity: 1; }
+  to { left: var(--to-x); top: var(--to-y); opacity: 0; }
+}
+
+@keyframes rag-overview-stage-arrival {
+  from { opacity: 0; }
+  50% { opacity: 1; }
+  to { opacity: var(--settled, .23); }
+}
+
+@keyframes rag-overview-stage-return {
+  from, to { opacity: .23; }
+  50% { opacity: 1; }
+}
