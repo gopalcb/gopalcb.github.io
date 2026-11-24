@@ -3169,17 +3169,6 @@
         "content": "",
         "blocks": []
       }
-    },
-    {
-      "id": "haystack-agents",
-      "label": "haystack agents",
-      "slug": "haystack-agents",
-      "published": true,
-      "page": {
-        "kind": "markdown",
-        "content": "# Haystack Agents",
-        "blocks": []
-      }
     }
   ],
   "pageComponents": [
