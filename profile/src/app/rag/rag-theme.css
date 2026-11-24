@@ -77,12 +77,22 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-left: auto;
   color: inherit;
   font-size: 11px;
   white-space: nowrap;
 }
-.notes-shell.monorepo-theme .rag-github:is(:hover, :focus-visible) { color: var(--wo-primary); }
+.notes-shell.monorepo-theme .header-profile-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1.4vw, 20px);
+  margin-inline-start: auto;
+}
+.notes-shell.monorepo-theme .header-about {
+  color: inherit;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.notes-shell.monorepo-theme .header-profile-links a:is(:hover, :focus-visible, [aria-current="page"]) { color: var(--wo-primary); }
 .github-mark {
   width: 16px;
   height: 16px;

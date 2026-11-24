@@ -39,7 +39,7 @@ import { MESH_PROJECT_ID, RAG_AREAS, RAG_PATH, ragAreaForUrl } from "../../rag/r
         @if (!isRagArea()) {
           <nav class="wo-header-nav" aria-label="Main navigation">
             @for (menu of store.headerMenus(); track menu.id) {
-              @if (menu.published) {
+              @if (menu.published && menu.id !== "about-me") {
                 <a
                   [routerLink]="'/' + menu.slug"
                   [class.active]="menuActive(menu)"
@@ -51,10 +51,16 @@ import { MESH_PROJECT_ID, RAG_AREAS, RAG_PATH, ragAreaForUrl } from "../../rag/r
           </nav>
         }
       }
-      <a class="rag-github" [href]="githubUrl" target="_blank" rel="noopener noreferrer">
-        <span class="github-mark" aria-hidden="true"></span>
-        {{ isMeshArea() ? ragDisplayName : "GitHub" }}
-      </a>
+      <div class="header-profile-links">
+        @if (aboutMenu; as about) {
+          <a class="header-about" [routerLink]="'/' + about.slug"
+            [attr.aria-current]="menuActive(about) ? 'page' : null">{{ about.label }}</a>
+        }
+        <a class="rag-github" [href]="githubUrl" target="_blank" rel="noopener noreferrer">
+          <span class="github-mark" aria-hidden="true"></span>
+          {{ isMeshArea() ? ragDisplayName : "GitHub" }}
+        </a>
+      </div>
 
     </div>
     <main id="main" tabindex="-1"><router-outlet /></main>
@@ -85,6 +91,9 @@ export class AppComponent {
   readonly isMeshArea = () => this.currentRagArea()?.id === MESH_PROJECT_ID;
   get githubUrl() {
     return this.isMeshArea() ? "https://github.com/gopalcb/rag-memory-mesh-cli" : "https://github.com/gopalcb";
+  }
+  get aboutMenu() {
+    return this.store.headerMenus().find(menu => menu.id === "about-me" && menu.published);
   }
   get featuredNavigation() {
     const path = this.store.meshProjectPath;
